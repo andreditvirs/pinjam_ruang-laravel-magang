@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Auth::routes();
+
+Route::get('/', function(){
     return view('welcome');
 });
+
+Route::get('/admin', 'AdminController@index');
+
+Route::resource('/rooms', 'RoomsController');

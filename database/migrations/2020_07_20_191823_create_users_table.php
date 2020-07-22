@@ -18,10 +18,13 @@ class CreateUsersTable extends Migration
             // $table->collation = 'latin1_swedish_ci';
             $table->id();
             $table->string('nip', 18)->unique();
+            $table->string('username');
+            $table->string('password');
             $table->string('nama', 50);
             // $table->foreignId('department_id');
             $table->text('jabatan');
             $table->text('foto');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -34,6 +37,5 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('departments');
     }
 }

@@ -11,6 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+        $this->call(RoomsTableSeeder::class);
+        // User::create([
+        //     "nama" => "cacan",
+        //     "username" => "admin",
+        //     // "user_accessed" =>"administrator",
+        //     "password" => Hash::make('admin')
+        // ]);
     }
 }
