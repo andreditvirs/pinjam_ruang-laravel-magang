@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ModifyUsersTable extends Migration
+class ModifyUsersTableForPositionInDepartments extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class ModifyUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('department_id')->constrained('departments');
+            $table->foreignId('jabatan_id')->constrained('position_in_departments');
         });
     }
 
@@ -26,7 +26,7 @@ class ModifyUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('users_department_id_foreign');
+            $table->dropForeign('users_jabatan_id_foreign');
         });
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ModifyDepartmentsTable extends Migration
+class CreatePositionInDepartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class ModifyDepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('departments', function (Blueprint $table) {
-            $table->foreignId('kepala_id')->constrained('users');
+        Schema::create('position_in_departments', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama', 50);
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class ModifyDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('departments', function (Blueprint $table) {
-            $table->dropForeign('departments_kepala_id_foreign');
-        });
+        Schema::dropIfExists('position_in_departments');
     }
 }

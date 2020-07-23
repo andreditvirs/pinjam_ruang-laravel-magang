@@ -18,7 +18,7 @@ class CreateDepartmentsTable extends Migration
             // $table->collation = 'latin1_swedish_ci';
             $table->id();
             $table->string('nama', 50);
-            // $table->foreignId('kepala_id');
+            $table->unsignedBigInteger('kepala_id');
             $table->timestamps();
         });
     }

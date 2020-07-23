@@ -29,7 +29,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-
   <!-- Navbar -->
     @include('lte/header')
   <!-- /.navbar -->
@@ -44,7 +43,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Starter Page</h1>
+            <h1 class="m-0 text-dark">Dashboard Pinjam Ruang</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -70,8 +69,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
-  </div>
   <!-- /.content-wrapper -->
+
+  @include('lte/footer')
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -83,7 +83,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </aside>
   <!-- /.control-sidebar -->
 
-  @include('lte/footer')
+  <div id="sidebar-overlay"></div>
 </div>
 <!-- ./wrapper -->
 

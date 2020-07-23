@@ -48,10 +48,18 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{URL::to('position_in_departments')}}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Jabatan
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{URL::to('users')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                User
+                Pegawai
               </p>
             </a>
           </li>

@@ -18,11 +18,11 @@ class CreateUsersTable extends Migration
             // $table->collation = 'latin1_swedish_ci';
             $table->id();
             $table->string('nip', 18)->unique();
-            $table->string('username');
+            $table->string('username')->unique();
             $table->string('password');
             $table->string('nama', 50);
-            // $table->foreignId('department_id');
-            $table->text('jabatan');
+            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->unsignedBigInteger('department_id');
             $table->text('foto');
             $table->rememberToken();
             $table->timestamps();

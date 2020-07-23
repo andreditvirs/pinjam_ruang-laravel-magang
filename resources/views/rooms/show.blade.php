@@ -14,18 +14,19 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                             
+                        <div class="col-md-4">       
                             <div class="form-group">
                                 <label for="name">Nama</label>
                                 <input id="name" type="text" value="{{ $room['nama'] }}" class="form-control" disabled />
                             </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="price">Lantai</label>
                                 <input id="price" type="text" value="{{ $room['lantai'] }}" class="form-control" disabled />
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="status">Kapasitas</label>
                                 <input id="status" type="text" value="{{ $room['kapasitas'] }}" class="form-control" disabled />
