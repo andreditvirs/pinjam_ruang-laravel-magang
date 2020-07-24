@@ -11,36 +11,50 @@
                 {{ Html::ul($errors->all())}}
             </div>
             @endif
+            
             <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        {{ Form::label('nip', 'NIP') }}
+                        {{ Form::text('Nip', '', ['class'=>'form-control', 'placeholder'=>'Masukkan NIP']) }}         
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         {{ Form::label('nama', 'Nama Pegawai') }}
                         {{ Form::text('nama', '', ['class'=>'form-control', 'placeholder'=>'Masukkan Nama Pegawai']) }}
                     </div>
-                    <div class="form-group">
-                        {{ Form::label('kapasitas', 'Kapasitas Pegawai') }}
-                        {{ Form::text('kapasitas', '', ['class'=>'form-control', 'placeholder'=>'Masukkan Kapasitas Pegawai']) }}
-                    </div>
                 </div>
-                <div class="col-md-6">
-                    
+                <div class="col-md-2">
                     <div class="form-group">
-                        {{ Form::label('lantai', 'Lantai') }}
-                        {{ Form::select('lantai', ['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4'], null,
-                            ['class'=>'form-control']) }}        
-                    </div>
-                    <div class="form-group">
-                        {{ Form::label('foto', 'Gambar Pegawai') }}
-                        {{ Form::file('foto', ['class'=>'form-control']) }}        
+                        {{ Form::label('jenis_kelamin', 'Jenis Kelamin') }}
+                        {{ Form::text('jenis_kelamin', '', ['class'=>'form-control', 'placeholder'=>'Jenis Kelamin']) }}
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
-                    {{ Form::label('fasilitas', 'Deskripsi Fasilitas') }}
-                    {{ Form::textarea('fasilitas', '', ['class'=>'form-control', 'placeholder'=>'Enter description', 'rows'=>5]) }}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ Form::label('Departemen', 'Departemen') }}
+                            {{ Form::text('Departemen', '', ['class'=>'form-control', 'placeholder'=>'Masukkan Departemen']) }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ Form::label('Jabatan', 'Jabatan') }}
+                            {{ Form::text('Jabatan', '', ['class'=>'form-control', 'placeholder'=>'Masukkan Jabatan']) }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ Form::label('foto', 'Foto Pegawai') }}
+                            {{ Form::file('foto', ['class'=>'form-control']) }}        
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
+
         </div>
         <div class="card-footer">
             <a href="{{ URL::to('users') }}" class="btn btn-outline-info">Kembali</a>

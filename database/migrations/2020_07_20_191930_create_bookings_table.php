@@ -22,7 +22,7 @@ class CreateBookingsTable extends Migration
             $table->text('keperluan');
             $table->dateTime('tanggal_mulai');
             $table->dateTime('tanggal_selesai');
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }

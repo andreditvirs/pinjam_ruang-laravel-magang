@@ -23,5 +23,6 @@ Route::get('/admin', 'AdminController@index');
 
 Route::resource('/rooms', 'RoomsController');
 Route::resource('/users', 'UsersController');
+Route::resource('/bookings', 'BookingsController');
 Route::resource('/departments', 'DepartmentsController');
 Route::resource('/position_in_departments', 'PositionInDepartmentsController');

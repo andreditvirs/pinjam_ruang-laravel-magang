@@ -32,6 +32,14 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{URL::to('bookings')}}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Peminjaman
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{URL::to('departments')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>

@@ -45,13 +45,11 @@ class PositionInDepartmentsController extends Controller
     {
         $request->validate([
             'nama'=>'required',
-            'kepala_id'=>'required',
         ]);
         
         $position_in_department = new \App\PositionInDepartment;
  
         $position_in_department->nama=$request->get('nama');
-        $position_in_department->kepala_id=$request->get('kepala_id');
         $position_in_department->save();
 
         return redirect()->route('position_in_departments.index')
@@ -91,12 +89,10 @@ class PositionInDepartmentsController extends Controller
     {
         $rules=[    
             'nama'=>'required',
-            'kepala_id'=>'required',
         ];
  
         $pesan=[
             'nama.required'=>'Nama tidak boleh kosong!',
-            'kepala_id.required'=>'Kepala_id tidak boleh kosong!',
         ];
  
         $validator=Validator::make($request->all(),$rules,$pesan);
@@ -106,10 +102,7 @@ class PositionInDepartmentsController extends Controller
             ->withErrors($validator);
  
         }else{
- 
-
             $position_in_department->nama=$request->get('nama');
-            $position_in_department->kepala_id=$request->get('kepala_id');
             $position_in_department->save();
  
             // Session::flash('message','Data Barang Berhasil Diubah');

@@ -21,7 +21,7 @@ class CreateRoomsTable extends Migration
             $table->string('lantai', 1);
             $table->integer('kapasitas');
             $table->text('fasilitas');
-            $table->text('foto');
+            $table->text('foto')->nullable();
             $table->timestamps();
         });
     }

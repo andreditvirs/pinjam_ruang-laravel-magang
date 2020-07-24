@@ -23,8 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('nama', 50);
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->unsignedBigInteger('department_id');
-            $table->text('foto');
-            $table->rememberToken();
+            $table->text('foto')->nullable();
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 Use Redirect;
 
 class UsersController extends Controller
@@ -47,10 +48,11 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'nip' =>'required',
             'nama'=>'required',
-            'lantai'=>'required',
-            'kapasitas'=>'required|integer',
-            'fasilitas'=>'required',
+            'jenis_kelamin' => 'required',
+            'depatment_id' => 'required',
+            'jabatan_id' => 'required',
             'foto'=>'required|mimes:jpg,png,jpeg,JPG'
         ]);
   
@@ -58,10 +60,11 @@ class UsersController extends Controller
 
         $user = new \App\User;
  
+        $user->nip=$request->get('nip');
         $user->nama=$request->get('nama');
-        $user->lantai=$request->get('lantai');
-        $user->kapasitas=$request->get('kapasitas');
-        $user->fasilitas=$request->get('fasilitas');
+        $user->jenis_kelamin=$request->get('jenis_kelamin');
+        $user->department_id=$request->get('department_id');
+        $user->jabatan_id=$request->get('jabatan_id');
         $user->foto=$foto;
         $user->save();
 
@@ -101,18 +104,20 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         $rules=[    
+            'nip' =>'required',
             'nama'=>'required',
-            'lantai'=>'required',
-            'kapasitas'=>'required|integer',
-            'fasilitas'=>'required',
+            'jenis_kelamin' => 'required',
+            'department_id' => 'required',
+            'jabatan_id' => 'required',
             'foto'=>'required|mimes:jpg,png,jpeg,JPG'
         ];
  
         $pesan=[
+            'nip.required'=>'NIP tidak boleh kosong!',
             'nama.required'=>'Nama tidak boleh kosong!',
-            'lantai.required'=>'Lantai tidak boleh kosong!',
-            'kapasitas.required'=>'Kapasitas tidak boleh kosong!',
-            'fasilitas.required'=>'Fasilitas tidak boleh kosong!',
+            'jenis_kelamin.required'=>'Pilih jenis kelamin!',
+            'department_id.required'=>'ID Department tidak boleh kosong!',
+            'jabatan_id.required'=>'ID Jabatan tidak boleh kosong!',
             'foto.required'=>'Foto tidak boleh kosong!'
         ];
  
@@ -130,13 +135,17 @@ class UsersController extends Controller
                 # code...
                 $foto=$request->get('foto');
             }else{
+                if(Storage::disk('public')->has($user->foto)){
+                    Storage::disk('public')->delete($user->foto);
+                }
                 $foto=$request->file('foto')->store('users','public');                
             }
 
+            $user->nip=$request->get('nip');
             $user->nama=$request->get('nama');
-            $user->lantai=$request->get('lantai');
-            $user->kapasitas=$request->get('kapasitas');
-            $user->fasilitas=$request->get('fasilitas');
+            $user->jenis_kelamin=$request->get('jenis_kelamin');
+            $user->department_id=$request->get('department_id');
+            $user->jabatan_id=$request->get('jabatan_id');
             $user->foto=$foto;
             $user->save();
  
@@ -155,6 +164,10 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
+        if(Storage::disk('public')->has($user->foto)){
+            Storage::disk('public')->delete($user->foto);
+        }
+
         $user->delete();
   
         return redirect()->route('users.index')

@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Room;
+use App\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
 Use Redirect;
 
-class RoomsController extends Controller
+class BookingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +16,10 @@ class RoomsController extends Controller
      */
     public function index()
     {
-        $rooms = Room::all();
+        $bookings = Booking::all();
   
-        return view('rooms.index', compact('rooms'));
-        // return view('rooms.index',compact('rooms'))
+        return view('bookings.index', compact('bookings'));
+        // return view('bookings.index',compact('bookings'))
         //     ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -31,7 +30,7 @@ class RoomsController extends Controller
      */
     public function create()
     {
-        return view('rooms.create');
+        return view('bookings.create');
     }
 
     /**
@@ -50,51 +49,51 @@ class RoomsController extends Controller
             'foto'=>'required|mimes:jpg,png,jpeg,JPG'
         ]);
   
-        $foto=$request->file('foto')->store('rooms','public');
+        $foto=$request->file('foto')->store('bookings','public');
 
-        $room = new \App\Room;
+        $booking = new \App\Booking;
  
-        $room->nama=$request->get('nama');
-        $room->lantai=$request->get('lantai');
-        $room->kapasitas=$request->get('kapasitas');
-        $room->fasilitas=$request->get('fasilitas');
-        $room->foto=$foto;
-        $room->save();
+        $booking->nama=$request->get('nama');
+        $booking->lantai=$request->get('lantai');
+        $booking->kapasitas=$request->get('kapasitas');
+        $booking->fasilitas=$request->get('fasilitas');
+        $booking->foto=$foto;
+        $booking->save();
 
-        return redirect()->route('rooms.index')
-                        ->with('success','Room created successfully.');
+        return redirect()->route('bookings.index')
+                        ->with('success','Booking created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Room  $room
+     * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function show(Room $room)
+    public function show(Booking $booking)
     {
-        return view('rooms.show',compact('room'));
+        return view('bookings.show',compact('booking'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Room  $room
+     * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function edit(Room $room)
+    public function edit(Booking $booking)
     {
-        return view('rooms.edit',compact('room'));
+        return view('bookings.edit',compact('booking'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Room  $room
+     * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
+    public function update(Request $request, Booking $booking)
     {
         $rules=[    
             'nama'=>'required',
@@ -115,7 +114,7 @@ class RoomsController extends Controller
         $validator=Validator::make($request->all(),$rules,$pesan);
  
         if ($validator->fails()) {
-            return Redirect::to('rooms/'.$room->id.'/edit')
+            return Redirect::to('bookings/'.$booking->id.'/edit')
             ->withErrors($validator);
  
         }else{
@@ -126,41 +125,41 @@ class RoomsController extends Controller
                 # code...
                 $foto=$request->get('foto');
             }else{
-                if(Storage::disk('public')->has($room->foto)){
-                    Storage::disk('public')->delete($room->foto);
+                if(Storage::disk('public')->has($booking->foto)){
+                    Storage::disk('public')->delete($booking->foto);
                 }
-                $foto=$request->file('foto')->store('rooms','public');                
+                $foto=$request->file('foto')->store('bookings','public');                
             }
 
-            $room->nama=$request->get('nama');
-            $room->lantai=$request->get('lantai');
-            $room->kapasitas=$request->get('kapasitas');
-            $room->fasilitas=$request->get('fasilitas');
-            $room->foto=$foto;
-            $room->save();
+            $booking->nama=$request->get('nama');
+            $booking->lantai=$request->get('lantai');
+            $booking->kapasitas=$request->get('kapasitas');
+            $booking->fasilitas=$request->get('fasilitas');
+            $booking->foto=$foto;
+            $booking->save();
  
             // Session::flash('message','Data Barang Berhasil Diubah');
              
-            return redirect()->route('rooms.index')
-                        ->with('success','Room created successfully.');
+            return redirect()->route('bookings.index')
+                        ->with('success','Booking created successfully.');
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Room  $room
+     * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Room $room)
+    public function destroy(Booking $booking)
     {
-        if(Storage::disk('public')->has($room->foto)){
-            Storage::disk('public')->delete($room->foto);
+        if(Storage::disk('public')->has($booking->foto)){
+            Storage::disk('public')->delete($booking->foto);
         }
 
-        $room->delete();
+        $booking->delete();
   
-        return redirect()->route('rooms.index')
-                        ->with('success','Room deleted successfully');
+        return redirect()->route('bookings.index')
+                        ->with('success','Booking deleted successfully');
     }
 }
