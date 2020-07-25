@@ -50,8 +50,10 @@ class UsersController extends Controller
         $request->validate([
             'nip' =>'required',
             'nama'=>'required',
+            'username' => 'required',
+            'password'=>'required|confirmed|min:6',
             'jenis_kelamin' => 'required',
-            'depatment_id' => 'required',
+            'department_id' => 'required',
             'jabatan_id' => 'required',
             'foto'=>'required|mimes:jpg,png,jpeg,JPG'
         ]);
@@ -106,6 +108,8 @@ class UsersController extends Controller
         $rules=[    
             'nip' =>'required',
             'nama'=>'required',
+            'username' => 'required',
+            'password'=>'required|confirmed|min:6',
             'jenis_kelamin' => 'required',
             'department_id' => 'required',
             'jabatan_id' => 'required',
@@ -115,6 +119,8 @@ class UsersController extends Controller
         $pesan=[
             'nip.required'=>'NIP tidak boleh kosong!',
             'nama.required'=>'Nama tidak boleh kosong!',
+            'username.required'=>'Username tidak boleh kosong!',
+            'password.required'=>'Password tidak boleh kosong/tidak sama!',
             'jenis_kelamin.required'=>'Pilih jenis kelamin!',
             'department_id.required'=>'ID Department tidak boleh kosong!',
             'jabatan_id.required'=>'ID Jabatan tidak boleh kosong!',

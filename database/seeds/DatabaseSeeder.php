@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
         $this->call([PositionInDepartmentsTableSeeder::class,
                     RoomsTableSeeder::class,
                     DepartmentsTableSeeder::class,
-                    UsersTableSeeder::class]);
+                    UsersTableSeeder::class,
+                    AdminsTableSeeder::class,
+                    ]);
     }
 }

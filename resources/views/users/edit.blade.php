@@ -31,9 +31,12 @@
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="form-group">
-                            {{ Form::label('jenis_kelamin', 'Jenis Kelamin') }}
-                            {{ Form::text('jenis_kelamin', $user['jenis_kelamin'], ['class'=>'form-control', 'placeholder'=>'Jenis Kelamin']) }}
+                        {{ Form::label('jenis_kelamin', 'Jenis Kelamin') }}
+                        <div class="radio">
+                            <input type="radio" id="jenis_kelamin" name="jenis_kelamin" value="L"  {{ ($user['jenis_kelamin']=="L")? "checked" : "" }} >Laki - Laki</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="jenis_kelamin" name="jenis_kelamin" value="P" {{ ($user['jenis_kelamin']=="P")? "checked" : "" }} >Perempuan</label>
                         </div>
                     </div>
                 </div>

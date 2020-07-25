@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -36,5 +38,52 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function username(){
+        return 'username';
+    }
+
+    // public function logout() {
+    //     Auth::logout();
+    //     return redirect('/login');
+    // }
+    
+    public function getLogin()
+    {
+      return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+  
+        // Validate the form data
+      $this->validate($request, [
+        'username' => 'required',
+        'password' => 'required'
+      ]);
+  
+        // Attempt to log the user in
+        // Passwordnya pake bcrypt
+      if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
+          // if successful, then redirect to their intended location
+        return redirect()->intended('/admin');
+      } else if (Auth::guard('user')->attempt(['username' => $request->username, 'password' => $request->password])) {
+        return redirect()->intended('/login');
+      } else{
+        return redirect()->intended('/login');
+      }
+  
+    }
+  
+    public function logout()
+    {
+      if (Auth::guard('admin')->check()) {
+        Auth::guard('admin')->logout();
+      } elseif (Auth::guard('user')->check()) {
+        Auth::guard('user')->logout();
+      }
+
+      return redirect('/login');
     }
 }
