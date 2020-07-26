@@ -39,9 +39,23 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Masuk') }}</a>
-                        </li> 
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->nama }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="get" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>   
                     </ul>
                 </div>
             </div>
@@ -51,14 +65,13 @@
             <div class="container">
                 <div class="row mt-5 justify-content-md-center">
                     <div class="col col-md-6 align-self-center">
-                        <div class="card border-secondary mb-3 text-center">
-                        <img class="card-img-top align-self-center m-5" src="{{ asset('storage/site/logo.jpg') }}" style="width: 10rem;" alt="Card image cap">
-                            <div class="card-header">Selamat Datang</div>
-                            <div class="card-body text-secondary">
-                              <h5 class="card-title">Web Admin Pinjam Ruang</h5>
-                              <p class="card-text">Login dengan tombol login di atas untuk melanjutkan</p>
+                        <div class="card border-danger text-center">
+                            <div class="card-header">Mohon Maaf</div>
+                            <div class="card-body">
+                                <h2 class="card-title text-danger"><b>401 Unauthorized</b></h2>
+                                <p class="card-text">User yang bukan Admin, Mohon tidak berkenan login di website ini. Silahkan Logout pada dropdown dengan tombol di atas</p>
                             </div>
-                          </div>
+                        </div>
                     </div>
                 </div>
             </div>

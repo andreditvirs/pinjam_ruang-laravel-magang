@@ -33,7 +33,7 @@ class RedirectIfAuthenticated
   
       } else if (Auth::guard('user')->check()) {
   
-        return redirect('/user');
+        return redirect('/notadmin');
         
       }
   

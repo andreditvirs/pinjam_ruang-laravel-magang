@@ -20,7 +20,7 @@ class AdminsTableSeeder extends Seeder
             'nama' => 'Drs. BENNY SAMPIRWANTO, M.Si',
             'jenis_kelamin' => 'L',
             'jabatan_id' => 1,
-            'foto' => 'image.jpg',
+            'foto' => 'admin/image.jpg',
             'department_id' => 1
         ]);
     }

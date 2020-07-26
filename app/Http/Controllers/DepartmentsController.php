@@ -134,4 +134,8 @@ class DepartmentsController extends Controller
         return redirect()->route('departments.index')
                         ->with('success','Department deleted successfully');
     }
+
+    public function getDepartmentCount(){
+        return $count = DB::table('departments')->count();
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 Use Redirect;
@@ -162,5 +163,9 @@ class RoomsController extends Controller
   
         return redirect()->route('rooms.index')
                         ->with('success','Room deleted successfully');
+    }
+
+    public function getRoomCount(){
+        return $count = DB::table('rooms')->count();
     }
 }

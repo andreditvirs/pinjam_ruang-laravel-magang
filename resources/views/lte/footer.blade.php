@@ -5,5 +5,5 @@
       Pinjam Ruang
     </div>
     <!-- Default to the left -->
-    <strong>Hak Cipta &copy; 2020 <a href="http://www.kominfo.jatimprov.go.id/">Dinas Komunikasi dan Informatika Jawa Timur</a>.</strong> All rights reserved.
+    <strong>Hak Cipta &copy; 2020 <a href="http://www.kominfo.jatimprov.go.id/">Dinas Komunikasi dan Informatika Jawa Timur</a></strong> 
   </footer>

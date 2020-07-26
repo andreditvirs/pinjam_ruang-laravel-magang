@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 Use Redirect;
 
@@ -161,5 +162,9 @@ class BookingsController extends Controller
   
         return redirect()->route('bookings.index')
                         ->with('success','Booking deleted successfully');
+    }
+
+    public function getBookingCount(){
+        return $count = DB::table('bookings')->count();
     }
 }

@@ -47,8 +47,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Starter Page</li>
+              <li class="breadcrumb-item"><a href="{{URL::to('admin')}}">Beranda</a></li>
+              <?php $segments = ''; ?>
+              @foreach(Request::segments() as $segment)
+                  <?php $segments .= '/'.$segment; ?>
+                  <li class="breadcrumb-item active">
+                      {{$segment}}
+                  </li>
+              @endforeach
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -77,8 +83,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
     <div class="p-3">
-      <h5>Title</h5>
-      <p>Sidebar content</p>
+      <h5>Deskripsi Aplikasi</h5>
+      <p>Web Admin Pinjam Ruang Diskominfo Jatim untuk memanajemen pegawai yang ingn meminjam ruangan</p>
     </div>
   </aside>
   <!-- /.control-sidebar -->

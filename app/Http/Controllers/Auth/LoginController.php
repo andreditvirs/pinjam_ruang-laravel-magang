@@ -69,9 +69,9 @@ class LoginController extends Controller
           // if successful, then redirect to their intended location
         return redirect()->intended('/admin');
       } else if (Auth::guard('user')->attempt(['username' => $request->username, 'password' => $request->password])) {
-        return redirect()->intended('/login');
+        return redirect()->intended('/notadmin');
       } else{
-        return redirect()->intended('/login');
+        return redirect()->intended('/');
       }
   
     }

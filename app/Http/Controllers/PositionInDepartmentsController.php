@@ -125,4 +125,8 @@ class PositionInDepartmentsController extends Controller
         return redirect()->route('position_in_departments.index')
                         ->with('success','PositionInDepartment deleted successfully');
     }
+
+    public function getPositionInDepartmentCount(){
+        return $count = DB::table('position_in_departments')->count();
+    }
 }
