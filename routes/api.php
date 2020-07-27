@@ -23,6 +23,7 @@ Route::post('/auth/register', 'Api\UserAuthController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('/bookings' , 'Api\BookingsController');
+    Route::resource('/rooms' , 'Api\RoomsController');
     Route::post('/auth/details', 'Api\UserAuthController@details');
     Route::post('/auth/change_password', 'Api\UserAuthController@changePassword');
     Route::post('/auth/logout', 'Api\UserAuthController@logout');

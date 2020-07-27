@@ -8,7 +8,7 @@
                 <div class="card-tools">
                  <a href="{{ URL::to('bookings/create')}}" class="btn btn-tool">
                      <i class="fa fa-plus"></i>
-                     &nbsp; Add
+                     &nbsp; Tambah Data Baru
                  </a>
              </div>
          </div>
@@ -35,6 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if ($bookings->count() > 0)
                             @foreach($bookings as $booking)
                             <tr>
                                 <td class="text-center">{{ $booking['id'] }}</td>
@@ -57,6 +58,11 @@
                                 </td>
                             </tr>
                             @endforeach
+                            @else
+                            <tr>
+                                <td align="center" colspan="8">Tidak ada data</td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

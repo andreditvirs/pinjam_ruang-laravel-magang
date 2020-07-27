@@ -8,7 +8,7 @@
                 <div class="card-tools">
                  <a href="{{ URL::to('users/create')}}" class="btn btn-tool">
                      <i class="fa fa-plus"></i>
-                     &nbsp; Add
+                     &nbsp; Tambah Data Baru
                  </a>
              </div>
          </div>
@@ -36,6 +36,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if ($users->count() > 0)
                             @foreach($users as $user)
                             <tr>
                                 <td class="text-center">{{ $user->id }}</td>
@@ -59,8 +60,16 @@
                                 </td>
                             </tr>
                             @endforeach
+                            @else
+                            <tr>
+                                <td align="center" colspan="9">Tidak ada data</td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
+                    <div class="pull-right">
+                        {{$users->links()}}
+                    </div>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@
                 <div class="card-tools">
                  <a href="{{ URL::to('rooms/create')}}" class="btn btn-tool">
                      <i class="fa fa-plus"></i>
-                     &nbsp; Add
+                     &nbsp; Tambah Data Baru
                  </a>
              </div>
          </div>

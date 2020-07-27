@@ -8,7 +8,7 @@
                 <div class="card-tools">
                  <a href="{{ URL::to('position_in_departments/create')}}" class="btn btn-tool">
                      <i class="fa fa-plus"></i>
-                     &nbsp; Add
+                     &nbsp; Tambah Data Baru
                  </a>
              </div>
          </div>

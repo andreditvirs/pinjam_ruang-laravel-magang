@@ -24,17 +24,17 @@
                         {{ Form::text('u_id', '', ['class'=>'form-control', 'placeholder'=>'Masukkan ID Peminjam']) }}
                     </div>
                 </div>
-                <div class="col-md-4">                    
+                <div class="col-md-4">
                     <div class="form-group">
-                        {{ Form::label('tanggal_mulai', 'tanggal_mulai') }}
-                        {{ Form::text('tanggal_mulai', '', ['class'=>'form-control', 'placeholder'=>'Masukkan Tanggal Mulai']) }}
-                    </div>
+                        {{ Form::label('tanggal_mulai', 'Tanggal Mulai)') }}
+                        <input name="tanggal_mulai" type="text" class="datepicker-here form-control" data-timepicker="true" data-language='en'>
+                        </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        {{ Form::label('tanggal_selesai', 'tanggal_selesai') }}
-                        {{ Form::text('tanggal_selesai', '', ['class'=>'form-control', 'placeholder'=>'Masukkan Tanggal Selesai']) }}
-                    </div>
+                        {{ Form::label('tanggal_selesai', 'Tanggal Selesai') }}
+                        <input name="tanggal_selesai" type="text" class="datepicker-here form-control" data-timepicker="true" data-language='en'>
+                        </div>
                 </div>
             </div>
             <div class="row">

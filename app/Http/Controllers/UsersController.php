@@ -22,7 +22,7 @@ class UsersController extends Controller
                 ->leftJoin('departments', 'users.department_id', '=', 'departments.id')
                 ->leftJoin('position_in_departments', 'users.jabatan_id', '=', 'position_in_departments.id')
                 ->select('users.*', 'departments.nama as department_nama', 'position_in_departments.nama as jabatan')
-                ->get();
+                ->paginate(5);
 
         return view('users.index', compact('users'));
         // return view('users.index',compact('users'))
