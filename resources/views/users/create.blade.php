@@ -16,7 +16,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         {{ Form::label('nip', 'NIP') }}
-                        {{ Form::text('nip', '', ['class'=>'form-control', 'placeholder'=>'Masukkan NIP']) }}         
+                        {{ Form::text('Nip', '', ['class'=>'form-control', 'placeholder'=>'Masukkan NIP']) }}         
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -26,56 +26,35 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    {{ Form::label('jenis_kelamin', 'Jenis Kelamin') }}
-                    <div class="radio">
-                        <input type="radio" id="jenis_kelamin" name="jenis_kelamin" value="L" >Laki - Laki</label>
-                    </div>
-                    <div class="radio">
-                        <input type="radio" id="jenis_kelamin" name="jenis_kelamin" value="P">Perempuan</label>
+                    <div class="form-group">
+                        {{ Form::label('jenis_kelamin', 'Jenis Kelamin') }}
+                        {{ Form::text('jenis_kelamin', '', ['class'=>'form-control', 'placeholder'=>'Jenis Kelamin']) }}
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        {{ Form::label('Departemen', 'Departemen') }}
-                        {{ Form::text('department_id', '', ['class'=>'form-control', 'placeholder'=>'Masukkan Departemen']) }}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ Form::label('Departemen', 'Departemen') }}
+                            {{ Form::text('Departemen', '', ['class'=>'form-control', 'placeholder'=>'Masukkan Departemen']) }}
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        {{ Form::label('Jabatan', 'Jabatan') }}
-                        {{ Form::text('jabatan_id', '', ['class'=>'form-control', 'placeholder'=>'Masukkan Jabatan']) }}
-                        {{-- {!! Form::text('search_text', null, array('placeholder' => 'Search Text','class' => 'form-control','id'=>'search_text')) !!} --}}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ Form::label('Jabatan', 'Jabatan') }}
+                            {{ Form::text('Jabatan', '', ['class'=>'form-control', 'placeholder'=>'Masukkan Jabatan']) }}
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        {{ Form::label('foto', 'Foto Pegawai') }}
-                        {{ Form::file('foto', ['class'=>'form-control']) }}        
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ Form::label('foto', 'Foto Pegawai') }}
+                            {{ Form::file('foto', ['class'=>'form-control']) }}        
+                        </div>
                     </div>
-                </div>                    
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        {{ Form::label('username', 'Username') }}
-                        {{ Form::text('username', '', ['class'=>'form-control', 'placeholder'=>'Masukkan Username']) }}    
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        {{ Form::label('password', 'Password') }}
-                        {{ Form::input('password', 'password', '',['class'=>'form-control', 'placeholder'=>'Masukkan Password']) }}
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        {{ Form::label('password_confirmation', 'Konfirmasi Password') }}
-                        {{ Form::input('password', 'password_confirmation', '',['class'=>'form-control', 'placeholder'=>'Masukkan Ulang Password']) }}
-                    </div>
+                    
                 </div>
             </div>
+
         </div>
         <div class="card-footer">
             <a href="{{ URL::to('users') }}" class="btn btn-outline-info">Kembali</a>

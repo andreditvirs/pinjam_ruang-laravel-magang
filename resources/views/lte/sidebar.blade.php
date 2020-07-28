@@ -72,13 +72,16 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{URL::to('logout')}}" class="nav-link">
+            <a class="nav-link" href="#" onclick="document.getElementById('logout').submit();">
               <i class="nav-icon far fa-circle text-danger"></i>
               <p>
                 Keluar
               </p>
             </a>
           </li>
+          <form id="logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
