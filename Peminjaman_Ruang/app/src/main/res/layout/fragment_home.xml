@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_list_mahasiwa"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:overScrollMode="never"
+    tools:context=".home.HomeFragment">
+    <RelativeLayout
+        android:id="@+id/rL_list_mahasiswa"
+        android:background="@color/colorwhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="14dp">
+
+        <TextView
+            android:id="@+id/txtV_Judul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pinjam Ruang \n Diskominfo Jatim"
+            android:layout_marginTop="16dp"
+            android:minLines="2"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:textColor="@color/colorBackground"
+            android:layout_marginBottom="14dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/txtV_Judul"
+            android:id="@+id/rcV_rooms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:nestedScrollingEnabled="false"/>
+    </RelativeLayout>
+</ScrollView>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorBackground">#0e406e</color>
+    <color name="colorTombol">#4599b5</color>
+    <color name="colorwhite">#ffff</color>
+    <color name="colorblack">#000000</color>
+    <color name="transparent">#80000000</color>
+    <color name="warna_baru">#f8f9fa</color>
+    <color name="warna_merah">#8B0000</color>
+    <color name="warna_biru">#4682B4</color>
+
+</resources>

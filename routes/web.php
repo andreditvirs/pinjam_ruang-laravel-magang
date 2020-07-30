@@ -46,13 +46,4 @@ Route::group(['middleware' => 'auth:admin'], function(){
     Route::resource('position_in_departments', 'PositionInDepartmentsController');
 });
 
-// Route::prefix('/admin')->name('admin.')->group(function(){
-//     Route::get('/', 'AdminController@index')->middleware('auth:admin');
-//     Route::resource('/rooms', 'RoomsController');
-//     Route::resource('/users', 'UsersController');
-//     Route::resource('/bookings', 'BookingsController');
-//     Route::resource('/departments', 'DepartmentsController');
-//     Route::resource('/position_in_departments', 'PositionInDepartmentsController');
-//   });
-
 // Route::get('/searchajax',array('as'=>'searchajax','uses'=>'UsersController@autoComplete'));

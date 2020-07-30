@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.silfi.peminjaman_ruang.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_HomeFragment_to_HomeFragment"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.silfi.peminjaman_ruang.profile.ProfileFragment"
+        android:label="@string/menu_profil"
+        tools:layout="@layout/fragment_profile" >
+                <action
+                    android:id="@+id/action_HomeFragment_to_ProfileFragment"
+                    app:destination="@id/nav_profile" />
+    </fragment>
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_logout"-->
+<!--        android:name="com.silfi.peminjaman_ruang.ui.logout.LogoutFragment"-->
+<!--        android:label="@string/menu_logout"-->
+<!--        tools:layout="@layout/fragment_logout" />-->
+</navigation>

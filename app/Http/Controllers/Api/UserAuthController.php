@@ -155,10 +155,10 @@ class UserAuthController extends Controller
         if(Auth::attempt(['username' => request('username'), 'password' => request('password')])){
             $user = Auth::user();
             $success['token'] =  $user->createToken('nApp')->accessToken;
-            return response()->json(['success' => $success], $this->successStatus);
+            return response()->json(['error' => false, 'success' => $success], $this->successStatus);
         }
         else{
-            return response()->json(['error'=>'Unauthorised'], 401);
+            return response()->json(['error'=>true, 'error_msg' => 'Unauthorized'], 401);
         }
     }
 

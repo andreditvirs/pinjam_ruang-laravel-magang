@@ -19,9 +19,8 @@ class RoomsController
 
         // return response
         $response = [
-            'success' => true,
-            'message' => 'departments retrieved successfully.',
-            'status' => $rooms,
+            'error' => false,
+            'rooms' => $rooms,
         ];
         return response()->json($response, 200);
     }
