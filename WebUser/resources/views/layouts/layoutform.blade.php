@@ -24,6 +24,20 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('akun/css/util.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('akun/css/main.css') }}">
 <!--===============================================================================================-->
+<link rel="stylesheet" href="{{ asset('air-datepicker\dist\css\datepicker.css') }}">
+<style>
+	/* Style untuk menyembunyikan spin button input type number */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		/* display: none; <- Crashes Chrome on hover */
+		-webkit-appearance: none;
+		margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+	}
+
+	input[type=number] {
+		-moz-appearance:textfield; /* Firefox */
+	}
+</style>
     </head>
     <body>
 
@@ -51,5 +65,8 @@
 	<script src="{{ asset('akun/vendor/countdowntime/countdowntime.js') }}"></script>
 <!--===============================================================================================-->
 	<script src="{{ asset('akun/js/main.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ asset('air-datepicker\dist\js\datepicker.js') }}"></script>
+	<script src="{{ asset('air-datepicker\dist\js\i18n\datepicker.en.js') }}"></script>
     </body>
 </html>

@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    use App\Http\Controllers\GuzzleController;
+    GuzzleController::getBooking(Cookie::get('access_token'));
+@endphp
 @include('inc.navberanda')
         <!-- Masthead-->
         <br>
@@ -8,21 +12,22 @@
             <div class="container d-flex h-100 align-items-center">
                 <div class="container">
                 <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
-                    <div class="col-lg-6">
-                        <img class="img-fluid" src="assets/img/profilpolos.jpeg" alt="" /></div>
+                    <div class="col-lg-3">
+                        <div class="bg-darkblue text-center h-100 pt-5 pb-5 pl-5 pr-5 cropfotoprofil">
+                            <img src="{{ Cookie::get('address_web_server').Cookie::get('foto') }}" alt="" />
+                        </div>
+                    </div>
                         <div class="col-lg-6">
-                        <div class="bg-darkblue text-center h-100">
-                            <!-- <button type="button" class="bg-transparent text-white-50 text-lg-right ">Edit</button> -->
+                        <div class="bg-darkblue text-center h-100 pt-5 pb-5">
                             <div class="d-flex h-100">
-                                <div class="w-100 my-auto text-center text-lg-left">
-                                    
-                                    <h4 class="pl-5 text-white mx-auto">{{ Cookie::get('nama') }}</h4>
-                                    <h4 class="pl-5 text-white">{{ Cookie::get('nip') }}</h4>
-                                    <p class="pl-5 mb-0 text-white-50">{{ Cookie::get('jabatan') }}</p>
-                                    <p class="pl-5 mb-0 text-white-50">{{ Cookie::get('bidang') }}</p>
+                                <div class="w-100 my-auto text-center justify-content-center">
+                                    <h4 class="pl-5 pr-5 text-white mx-auto text-lg-left">{{ Cookie::get('nama') }}</h4>
+                                    <h4 class="pl-5 pr-5 text-white text-lg-left">{{ Cookie::get('nip') }}</h4>
+                                    <p class="pl-5 pr-5 mb-0 text-white-50 text-lg-left">{{ Cookie::get('jabatan') }}</p>
+                                    <p class="pl-5 pr-5 mb-0 text-white-50 text-lg-left">{{ Cookie::get('bidang') }}</p>
                                     <hr class="d-none d-lg-block mb-5 ml-0" />
-                                        <button type="button" class="btn  btn-info bg-birumuda text-center col-lg-5 ml-5">Pinjam Ruangan</button>
-                                        <button type="button" class="btn  btn-info bg-toska text-center col-lg-5">Edit</button>
+                                    <a href="{{ URL::to('bookings/status') }}"><button type="button" class="btn  btn-info bg-birumuda text-center col-lg-5">Pinjam Ruangan</button></a>
+                                    <a href="{{ URL::to('profile/edit') }}"><button type="button" class="btn btn-info bg-toska text-center col-lg-5">Edit</button></a>
                                 </div>
                             </div>
                         </div>
@@ -48,37 +53,30 @@
         </section>
         
         <section class="Jadwal-section bg-light" id="Jadwal">
-            <br><br><label for="" style="align-items: center; font-size: 32px"> Jadwal</label><br><br>
+            <br><br><label for="" style="align-items: center; font-size: 32px"> Jadwal Peminjaman</label><br><br>
             <div class="container">
-                <div class="row align-content-center">
-                    <div class="col-sm-4">
-                      <div class="card">
-                        <div class="card-body">
-                          <h5 class="card-title">Nama Ruangan: </h5>
-                          <p class="card-text">Tanggal Peminjaman: </p>
-                          <a href="#" class="btn btn-outline-info">Unduh Surat Izin</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
+                <div class="row justify-content-center">
+                    @if(count(Cache::get('bookings')['bookings']) != 0)
+                    @foreach (Cache::get('bookings')['bookings'] as $booking)
+                    <div class="col-sm-4 mt-4">
                         <div class="card">
                           <div class="card-body">
-                            <h5 class="card-title">Nama Ruangan: </h5>
-                            <p class="card-text">Tanggal Peminjaman: </p>
-                            <a href="#" class="btn btn-outline-info">Unduh Surat Izin</a>
+                          <h5 class="card-title mb-4">{{ $booking["r_nama"]}}</h5>
+                          <p class="card-subtitle">Tanggal Selesai</p>
+                          <h6 class="card-text text-info">{{ $booking["tanggal_selesai"] }}</h6>
+                          <p class="card-subtitle">Tanggal Mulai</p>
+                          <h6 class="card-text text-info mb-5">{{ $booking["tanggal_mulai"] }}</h6>
+                              <a href="#" class="btn btn-outline-info">Unduh Surat Izin</a>
                           </div>
                         </div>
                       </div>
-                    <div class="col-sm-4">
-                      <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Nama Ruangan: </h5>
-                            <p class="card-text">Tanggal Peminjaman: </p>
-                            <a href="#" class="btn btn-outline-info">Unduh Surat Izin</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    @endforeach
+                    @else
+                    <tr>
+                        <td align="center" colspan="8"><p class="text-info">Tidak ada peminjaman ruang pada hari ini</p></td>
+                    </tr>
+                    @endif
+                </div>
             </div>
             <br>
         </section>
@@ -87,15 +85,14 @@
         <section class="projects-section bg-light pt-5 pb-5" id="projects">
             <div class="container">
                 <!-- Project One Row-->
-                <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/building 7.png" alt="" /></div>
+                <div class="row justify-content-center no-gutters cropcenter mb-5 mb-lg-0" >
+                    <div class="col-lg-6"><img class="img-fluid " style="max-height: 400px; min-height: 100px;" src="{{ Cookie::get('address_web_server').Cache::get('1_foto') }}" alt="" /></div>
                     <div class="col-lg-6">
                         <div class="bg-darkblue text-center h-100 project">
                             <div class="d-flex h-100">
                                 <div class="project-text w-100 my-auto text-center text-lg-left">
-                                    <h4 class="text-white">Ruang Aula</h4>
-                                    <p class="mb-0 text-white-50">Kapasitas : </p>
-                                    <!-- <a href="Akun/indexLogin.html" class="text-white-50" >Selengkapnya &rarr;</a>  -->
+                                <h4 class="text-white">{{ Cache::get('1_nama')}}</h4>
+                                    <p class="mb-0 text-white-50">Kapasitas : {{ Cache::get('1_kapasitas') }} orang</p>
                                     <a href="#" class="text-white-50"  data-toggle="modal" data-target=".bd-example-modal-lg1" >Selengkapnya &rarr;</a> 
                                     <hr class="d-none d-lg-block mb-0 ml-0" />
                                 </div>
@@ -108,22 +105,20 @@
                         <div class="modal-content">
                             <div class="row">
                                 <div class="d-lg-block">
-                                    <h1 class="text-center">Detail ruangan</h1>
+                                    <h1 class="text-center pt-3 pb-1">Detail ruangan</h1>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-lg-4 p-5">
-                                            <div><img src="assets/img/building 6.png" alt="Image" class="img-fluid"></div>
+                                        <div class="col-lg-4 pb-5 pr-5 pl-5">
+                                            <div><img src="{{ Cookie::get('address_web_server').Cache::get('1_foto') }}" alt="Image" class="img-fluid"></div>
                                         
                                         </div>
-                                        <div class="col-lg-7 pl-lg-10 ml-3">
+                                        <div class="col-lg-7 pl-lg-10">
                                             <div class="mb-5 text-lg-left">
-                                                <h3 class="text-black mb-4">Ruang Aula</h3>
-                                                <p>Lokasi : lantai 2</p>
-                                                <p>Fasilitas :</p>
-                                                <li>AC</li>
-                                                <li>Proyektor</li>
+                                                <h3 class="text-black mb-4">{{ Cache::get('1_nama') }}</h3>
+                                                <p>Lokasi : Lantai {{ Cache::get('1_lantai') }}</p>
+                                                <p>Fasilitas : {{ Cache::get('1_fasilitas') }}</p>
                                             </div>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                                         </div>
                                     </div>
                                 </div>
@@ -132,18 +127,15 @@
                     </div>
                 </div>
 
-
-
                 <!-- Project Two Row-->
-                <div class="row justify-content-center no-gutters">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/building 7.png" alt="" /></div>
+                <div class="row justify-content-center no-gutters cropcenter ">
+                    <div class="col-lg-6"><img class="img-fluid" style="max-height: 400px; min-height: 100px;" src="{{ Cookie::get('address_web_server').Cache::get('2_foto') }}" alt="" /></div>
                     <div class="col-lg-6 order-lg-first">
                         <div class="bg-darkblue text-center h-100 project">
                             <div class="d-flex h-100">
                                 <div class="project-text w-100 my-auto text-center text-lg-right">
-                                    <h4 class="text-white">Ruang Smart Province</h4>
-                                    <p class="mb-0 text-white-50">Kapasitas : </p>
-                                    <!-- <a href="Akun/indexLogin.html" class="text-white-50" >Selengkapnya &rarr;</a>  -->
+                                <h4 class="text-white">{{ Cache::get('2_nama') }}</h4>
+                                    <p class="mb-0 text-white-50">Kapasitas : {{ Cache::get('2_kapasitas') }} orang</p>
                                     <a href="#" class="text-white-50"  data-toggle="modal" data-target=".bd-example-modal-lg2" >Selengkapnya &rarr;</a> 
                                     <hr class="d-none d-lg-block mb-0 mr-0" />
                                 </div>
@@ -156,22 +148,20 @@
                         <div class="modal-content">
                             <div class="row">
                                 <div class="d-lg-block">
-                                    <h1 class="text-center">Detail ruangan</h1>
+                                    <h1 class="text-center pt-3 pb-1">Detail ruangan</h1>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-lg-4 p-5">
-                                            <div><img src="assets/img/building 6.png" alt="Image" class="img-fluid"></div>
+                                        <div class="col-lg-4 pb-5 pr-5 pl-5">
+                                            <div><img src="{{ Cookie::get('address_web_server').Cache::get('2_foto') }}" alt="Image" class="img-fluid"></div>
                                         
                                         </div>
-                                        <div class="col-lg-7 pl-lg-5 ml-3">
+                                        <div class="col-lg-7 pl-lg-10">
                                             <div class="mb-5 text-lg-left">
-                                                <h3 class="text-black mb-4">Ruang Smart Province</h3>
-                                                <p>Lokasi : lantai 2</p>
-                                                <p>Fasilitas :</p>
-                                                <li>AC</li>
-                                                <li>Proyektor</li>
+                                                <h3 class="text-black mb-4">{{ Cache::get('2_nama') }}</h3>
+                                                <p>Lokasi : Lantai {{ Cache::get('2_lantai') }}</p>
+                                                <p>Fasilitas : {{ Cache::get('2_fasilitas') }}</p>
                                             </div>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                                         </div>
                                     </div>
                                 </div>
@@ -180,18 +170,15 @@
                     </div>
                 </div>
 
-
-
-                <!-- Project Three Row-->
-                <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/building 7.png" alt="" /></div>
+                <!-- Project Third Row-->
+                <div class="row justify-content-center no-gutters cropcenter mb-5 mb-lg-0" >
+                    <div class="col-lg-6"><img class="img-fluid " style="max-height: 400px; min-height: 100px;" src="{{ Cookie::get('address_web_server').Cache::get('3_foto') }}" alt="" /></div>
                     <div class="col-lg-6">
                         <div class="bg-darkblue text-center h-100 project">
                             <div class="d-flex h-100">
                                 <div class="project-text w-100 my-auto text-center text-lg-left">
-                                    <h4 class="text-white">Ruang Rapat Kadis</h4>
-                                    <p class="mb-0 text-white-50">Kapasitas : </p>
-                                    <!-- <a href="Akun/indexLogin.html" class="text-white-50" >Selengkapnya &rarr;</a>  -->
+                                <h4 class="text-white">{{ Cache::get('3_nama')}}</h4>
+                                    <p class="mb-0 text-white-50">Kapasitas : {{ Cache::get('3_kapasitas') }} orang</p>
                                     <a href="#" class="text-white-50"  data-toggle="modal" data-target=".bd-example-modal-lg3" >Selengkapnya &rarr;</a> 
                                     <hr class="d-none d-lg-block mb-0 ml-0" />
                                 </div>
@@ -204,22 +191,20 @@
                         <div class="modal-content">
                             <div class="row">
                                 <div class="d-lg-block">
-                                    <h1 class="text-center">Detail ruangan</h1>
+                                    <h1 class="text-center pt-3 pb-1">Detail ruangan</h1>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-lg-4 p-5">
-                                            <div><img src="assets/img/building 6.png" alt="Image" class="img-fluid"></div>
+                                        <div class="col-lg-4 pb-5 pr-5 pl-5">
+                                            <div><img src="{{ Cookie::get('address_web_server').Cache::get('3_foto') }}" alt="Image" class="img-fluid"></div>
                                         
                                         </div>
-                                        <div class="col-lg-7 pl-lg-5 ml-3">
+                                        <div class="col-lg-7 pl-lg-10">
                                             <div class="mb-5 text-lg-left">
-                                                <h3 class="text-black mb-4">Ruang Rapat Kadis</h3>
-                                                <p>Lokasi : lantai 2</p>
-                                                <p>Fasilitas :</p>
-                                                <li>AC</li>
-                                                <li>Proyektor</li>
+                                                <h3 class="text-black mb-4">{{ Cache::get('3_nama') }}</h3>
+                                                <p>Lokasi : Lantai {{ Cache::get('3_lantai') }}</p>
+                                                <p>Fasilitas : {{ Cache::get('3_fasilitas') }}</p>
                                             </div>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                                         </div>
                                     </div>
                                 </div>
@@ -228,18 +213,16 @@
                     </div>
                 </div>
 
-                
-                <!-- Project four Row-->
-                <div class="row justify-content-center no-gutters">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/building 7.png" alt="" /></div>
+                <!-- Project Fourth Row-->
+                <div class="row justify-content-center no-gutters cropcenter ">
+                    <div class="col-lg-6"><img class="img-fluid" style="max-height: 400px; min-height: 100px;" src="{{ Cookie::get('address_web_server').Cache::get('4_foto') }}" alt="" /></div>
                     <div class="col-lg-6 order-lg-first">
                         <div class="bg-darkblue text-center h-100 project">
                             <div class="d-flex h-100">
                                 <div class="project-text w-100 my-auto text-center text-lg-right">
-                                    <h4 class="text-white">Ruang Komando</h4>
-                                    <p class="mb-0 text-white-50">Kapasitas : </p>
+                                <h4 class="text-white">{{ Cache::get('4_nama') }}</h4>
+                                    <p class="mb-0 text-white-50">Kapasitas : {{ Cache::get('4_kapasitas') }} orang</p>
                                     <a href="#" class="text-white-50"  data-toggle="modal" data-target=".bd-example-modal-lg4" >Selengkapnya &rarr;</a> 
-                                    
                                     <hr class="d-none d-lg-block mb-0 mr-0" />
                                 </div>
                             </div>
@@ -251,22 +234,20 @@
                         <div class="modal-content">
                             <div class="row">
                                 <div class="d-lg-block">
-                                    <h1 class="text-center">Detail ruangan</h1>
+                                    <h1 class="text-center pt-3 pb-1">Detail ruangan</h1>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-lg-4 p-5">
-                                            <div><img src="assets/img/building 6.png" alt="Image" class="img-fluid"></div>
+                                        <div class="col-lg-4 pb-5 pr-5 pl-5">
+                                            <div><img src="{{ Cookie::get('address_web_server').Cache::get('4_foto') }}" alt="Image" class="img-fluid"></div>
                                         
                                         </div>
-                                        <div class="col-lg-7 pl-lg-5 ml-3">
+                                        <div class="col-lg-7 pl-lg-10">
                                             <div class="mb-5 text-lg-left">
-                                                <h3 class="text-black mb-4">Ruang Komando</h3>
-                                                <p>Lokasi : lantai 2</p>
-                                                <p>Fasilitas :</p>
-                                                <li>AC</li>
-                                                <li>Proyektor</li>
+                                                <h3 class="text-black mb-4">{{ Cache::get('4_nama') }}</h3>
+                                                <p>Lokasi : Lantai {{ Cache::get('4_lantai') }}</p>
+                                                <p>Fasilitas : {{ Cache::get('4_fasilitas') }}</p>
                                             </div>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                                         </div>
                                     </div>
                                 </div>
@@ -274,16 +255,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- Project Five Row-->
-                <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
-                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/building 7.png" alt="" /></div>
+
+                <!-- Project Fiveth Row-->
+                <div class="row justify-content-center no-gutters cropcenter mb-5 mb-lg-0" >
+                    <div class="col-lg-6"><img class="img-fluid " style="max-height: 400px; min-height: 100px;" src="{{ Cookie::get('address_web_server').Cache::get('5_foto') }}" alt="" /></div>
                     <div class="col-lg-6">
                         <div class="bg-darkblue text-center h-100 project">
                             <div class="d-flex h-100">
                                 <div class="project-text w-100 my-auto text-center text-lg-left">
-                                    <h4 class="text-white">Ruang Workshop</h4>
-                                    <p class="mb-0 text-white-50">Kapasitas : </p>
-                                    <!-- <a href="Akun/indexLogin.html" class="text-white-50" >Selengkapnya &rarr;</a>  -->
+                                <h4 class="text-white">{{ Cache::get('5_nama')}}</h4>
+                                    <p class="mb-0 text-white-50">Kapasitas : {{ Cache::get('5_kapasitas') }} orang</p>
                                     <a href="#" class="text-white-50"  data-toggle="modal" data-target=".bd-example-modal-lg5" >Selengkapnya &rarr;</a> 
                                     <hr class="d-none d-lg-block mb-0 ml-0" />
                                 </div>
@@ -291,38 +272,37 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal fade bd-example-modal-lg5" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="row">
-                            <div class="d-lg-block">
-                                <h1 class="text-center">Detail ruangan</h1>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-lg-4 p-5">
-                                        <div><img src="assets/img/building 6.png" alt="Image" class="img-fluid"></div>
+                <div class="modal fade bd-example-modal-lg5" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="row">
+                                <div class="d-lg-block">
+                                    <h1 class="text-center pt-3 pb-1">Detail ruangan</h1>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-4 pb-5 pr-5 pl-5">
+                                            <div><img src="{{ Cookie::get('address_web_server').Cache::get('5_foto') }}" alt="Image" class="img-fluid"></div>
                                         
-                                    </div>
-                                    <div class="col-lg-7 pl-lg-5 ml-3">
-                                        <div class="mb-5 text-lg-left">
-                                            <h3 class="text-black mb-4 text-lg-left">Ruang Workshop</h3>
-                                            <p class="text-lg-left">Lokasi : lantai 2</p>
-                                            <p class="text-lg-left"> Fasilitas :</p>
-                                            <li class="text-lg-left">AC</li>
-                                            <li class="text-lg-left">Proyektor</li>
-                                            
                                         </div>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                 
+                                        <div class="col-lg-7 pl-lg-10">
+                                            <div class="mb-5 text-lg-left">
+                                                <h3 class="text-black mb-4">{{ Cache::get('5_nama') }}</h3>
+                                                <p>Lokasi : Lantai {{ Cache::get('5_lantai') }}</p>
+                                                <p>Fasilitas : {{ Cache::get('5_fasilitas') }}</p>
+                                            </div>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                        </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</div>
+</section>
 
 @include('inc.contactsection')
         

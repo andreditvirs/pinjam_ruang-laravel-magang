@@ -16,23 +16,14 @@
       <span class="txt1 p-b-11">
           Password
       </span>
-      <div class="wrap-input100 validate-input m-b-12" data-validate = "Password harus diisi">
+      <div class="wrap-input100 validate-input m-b-48" data-validate = "Password harus diisi">
           <span class="btn-show-pass">
               <i class="fa fa-eye"></i>
           </span>
           <input class="input100" type="password" name="password" >
           <span class="focus-input100"></span>
       </div>
-      <div class="flex-sb-m w-full p-b-48">
-          <div class="contact100-form-checkbox">
-              <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-              <label class="label-checkbox100" for="ckb1">
-                  Remember me
-              </label>
-          </div>
-      </div>
-
-      <div class="container-login100-form-btn">
+      <div class="container-login100-form-btn ">
         <button class="login100-form-btn" type="submit">
                 Masuk
         </button>

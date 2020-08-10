@@ -11,6 +11,7 @@
       width: auto;
       font-size: 16px;
     }
+    
 
     body {
 
@@ -22,6 +23,20 @@
 
     /* font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif; */
 
+    }
+
+    .cropcenter img {
+      object-fit: none; /* Do not scale the image */
+      object-position: center; /* Center the image within the element */
+      width: 100%;
+      max-height: 250px;
+    }
+
+    .cropfotoprofil img {
+      object-fit: cover; /* Do not scale the image */
+      object-position: center; /* Center the image within the element */
+      height: 100%;
+      width: 100%;
     }
 
     #calendar {

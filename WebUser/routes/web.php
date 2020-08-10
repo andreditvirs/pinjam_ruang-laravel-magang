@@ -36,8 +36,27 @@ Route::get('home', function () {
     return view('akun.beranda');
 })->middleware('homeauth');
 
+Route::get('profile/edit', function () {
+    return view('akun.editprofile');
+});
+
+Route::get('profile/password/edit', function () {
+    return view('akun.changepass');
+});
+
+Route::get('bookings/status', function () {
+    return view('akun.usersbooking');
+});
+
+Route::get('bookings/create', function () {
+    return view('akun.formbooking');
+});
+
 Route::post('login', 'GuzzleController@login')->name('login');
 Route::post('register', 'GuzzleController@register')->name('register');
 Route::post('logout', 'GuzzleController@logout')->name('logout');
+Route::post('profile/edit', 'GuzzleController@editprofile')->name('editprofile');
+Route::post('profile/password/edit', 'GuzzleController@changepass')->name('changepass');
 
-Route::post('bookings', 'GuzzleController@booking');
+Route::post('bookings', 'GuzzleController@booking')->name('bookings');
+Route::post('bookings/delete', 'GuzzleController@deleteUserBooking')->name('delete_user_booking');

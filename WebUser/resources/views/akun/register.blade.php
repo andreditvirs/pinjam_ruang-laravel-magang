@@ -10,7 +10,7 @@
       NIP
     </span>
     <div class="wrap-input100 validate-input m-b-36" data-validate = "NIP harus diisi">
-      <input class="input100" type="text" name="nip" required>
+      <input class="input100" type="number" name="nip" step="0.01" onKeyPress="if(this.value.length==18) return false;" required >
       <span class="focus-input100"></span>
     </div>
 
