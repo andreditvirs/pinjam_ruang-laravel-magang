@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Cookie;
 use GuzzleHttp\Cookie\CookieJar;
+use App\Http\Controllers\GuzzleController;
 
 class UserAuthMiddleware
 {
@@ -18,7 +19,8 @@ class UserAuthMiddleware
     public function handle($request, Closure $next)
     {
         $cookie = Cookie::get('access_token');
-        if (is_null($cookie)) {
+        $valid = GuzzleController::validasiUser($cookie);
+        if (is_null($cookie) || !$valid) {
             return $next($request);
         }
 

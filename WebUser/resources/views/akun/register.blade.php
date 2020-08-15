@@ -18,7 +18,7 @@
       Nama Lengkap
     </span>
     <div class="wrap-input100 validate-input m-b-36" data-validate = "Nama Lengkap harus diisi">
-      <input class="input100" type="text" name="nama" required>
+      <input class="input100" type="text" name="nama" onKeyPress="if(this.value.length==50) return false;" required>
       <span class="focus-input100"></span>
     </div>
 
@@ -72,20 +72,24 @@
 
     <span class="txt1 p-b-11">
       Username
+      <p style="font-size:10px">(Maksimal 10 alphanumeric)</p>
+      <br>
     </span>
     <div class="wrap-input100 validate-input m-b-36" data-validate = "Username harus diisi">
-      <input class="input100" type="text" name="username" required>
+      <input class="input100" type="text" onKeyPress="if(this.value.length==10) return false;" name="username" required>
       <span class="focus-input100"></span>
     </div>
 
     <span class="txt1 p-b-11">
       Password
+      <p style="font-size:10px">(Maksimal 10 alphanumeric)</p>
+      <br>
     </span>
     <div class="wrap-input100 validate-input m-b-36" data-validate = "Password harus diisi">
       <span class="btn-show-pass">
         <i class="fa fa-eye"></i>
       </span>
-      <input id="password" class="input100" type="password" name="password" required>
+      <input id="password" class="input100" onKeyPress="if(this.value.length==10) return false;" type="password" name="password" required>
       <span class="focus-input100"></span>
     </div>
 
@@ -102,17 +106,31 @@
     <div class="registrationFormAlert" id="divCheckPasswordMatch" style="color: red"></div>
 
     <span class="txt1 ">
-      Upload Foto
-      <br><br>
+      Upload Foto 
+      <p style="font-size:10px">(Tipe JPG, JPEG, PNG (Ukuran 3x4))</p>
+      <br>
       <input class="form-control-file " type="file" name="foto" required>
     </span>
     
-
-    <div class="container-login100-form-btn m-t-36">
-      <button class="login100-form-btn" type="submit" onclick="return validate()">
-        Daftar
-      </button>
+    @if (session('alert'))
+    <div class="alert alert-danger">
+        {{ session('alert') }}
     </div>
+    @endif
+
+    <div class="container mt-5">
+    <div class="row">
+      <div class="col-lg-9 mb-5 text-left align-self-center">
+        <a href="{{ URL::to('/') }}"><u><- Kembali ke beranda</u></a>
+      </div>
+      <div class="col-lg-3">
+          <button class="login100-form-btn" type="submit" onclick="return validate()">
+            Daftar
+          </button>
+        </div>
+  </div>
+</div>
+
   </form>
 </div>
 <script type="text/javascript">

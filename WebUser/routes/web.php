@@ -26,37 +26,63 @@ Route::get('register', function () {
     return view('akun.register');
 });
 
-// Route::get('bookings', function () {
-//     return view('booking');
-// });
-
-Route::get('home', function () {
-    // $profile = Session::get('profile');
-    //->with('profile', $profile)
-    return view('akun.beranda');
-})->middleware('homeauth');
-
-Route::get('profile/edit', function () {
-    return view('akun.editprofile');
-});
-
-Route::get('profile/password/edit', function () {
-    return view('akun.changepass');
-});
-
-Route::get('bookings/status', function () {
-    return view('akun.usersbooking');
-});
-
-Route::get('bookings/create', function () {
-    return view('akun.formbooking');
-});
-
 Route::post('login', 'GuzzleController@login')->name('login');
 Route::post('register', 'GuzzleController@register')->name('register');
-Route::post('logout', 'GuzzleController@logout')->name('logout');
-Route::post('profile/edit', 'GuzzleController@editprofile')->name('editprofile');
-Route::post('profile/password/edit', 'GuzzleController@changepass')->name('changepass');
 
-Route::post('bookings', 'GuzzleController@booking')->name('bookings');
-Route::post('bookings/delete', 'GuzzleController@deleteUserBooking')->name('delete_user_booking');
+Route::group(['middleware' => 'homeauth'], function(){
+            Route::get('home', function () {
+                // $profile = Session::get('profile');
+                //->with('profile', $profile)
+                return view('akun.beranda');
+            });
+        
+            Route::get('profile/edit', function () {
+                return view('akun.editprofile');
+            });
+            
+            Route::get('profile/password/edit', function () {
+                return view('akun.changepass');
+            });
+            
+            Route::get('bookings/status', function () {
+                if(Cache::has('booking_r_id')){
+                    Cache::forget('booking_r_id');
+                    Cache::forget('booking_tanggal_pinjam');
+                    Cache::forget('booking_waktu_mulai');
+                    Cache::forget('booking_waktu_selesai');
+                    if(Cache::has('booking_keperluan')){
+                        Cache::forget('booking_keperluan');
+                    }
+                }
+                return view('akun.usersbooking');
+            });
+            
+            Route::get('bookings/step/1', function () {
+                return view('akun.formbooking');
+            });
+        
+            Route::get('bookings/step/2', function () {
+                if(Cache::has('booking_r_id')){
+                    return view('akun.formbooking2');
+                }else{
+                    return redirect()->back();
+                }
+            });
+        
+            Route::get('bookings/step/3', function () {
+                if(Cache::has('booking_r_id') && Cache::has('booking_keperluan')){
+                    return view('akun.formbooking3');
+                }else{
+                    return redirect()->back();
+                }
+            });
+        
+            Route::post('logout', 'GuzzleController@logout')->name('logout');
+            Route::post('profile/edit', 'GuzzleController@editprofile')->name('editprofile');
+            Route::post('profile/password/edit', 'GuzzleController@changepass')->name('changepass');
+            Route::post('bookings/filter', 'GuzzleController@getFilterBooking')->name('filter_bookings');
+            Route::post('bookings/step/1', 'GuzzleController@booking1')->name('bookings1');
+            Route::post('bookings/step/2', 'GuzzleController@booking2')->name('bookings2');
+            Route::post('bookings/step/3', 'GuzzleController@booking3')->name('bookings3');
+            Route::post('bookings/delete', 'GuzzleController@deleteUserBooking')->name('delete_user_booking');
+    });

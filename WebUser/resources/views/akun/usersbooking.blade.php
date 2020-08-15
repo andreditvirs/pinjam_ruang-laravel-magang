@@ -11,24 +11,51 @@
             <span class="login100-form-title p-b-16">
                 Peminjaman Saya
             </span>
-        <a href="{{ URL::to('bookings/create') }}"><button class="btn btn-info btn-lg">Buat Peminjaman Baru</button></a>
+        <a href="{{ URL::to('bookings/step/1') }}"><button class="btn btn-info btn-lg">Buat Peminjaman Baru</button></a>
         </div>
     </div>
 
+    @if (session('alert'))
+    <div class="alert alert-info m-b-24">
+        {{ session('alert') }}
+    </div>
+    @endif
+    
     <div class="row">
         <div class="col">
             @if(count(Cache::get('user_booking')['user_booking']) != 0)
+            <?php $i=0 ?>
             @foreach (Cache::get('user_booking')['user_booking'] as $booking)
             <div class="card border-info mb-3">
                 <div class="card-body">
                     
                 <h5 class="card-title">Nama Ruangan : {{ $booking['nama']}}</h5>
-                    <p class="card-text">Tanggal Mulai :  {{ $booking['tanggal_mulai']}}</p>
-                    <p class="card-text">Tanggal Selesai :  {{ $booking['tanggal_selesai']}}</p>
+                    <p class="card-text">Tanggal Pinjam :  {{ $booking['tanggal_pinjam']}}</p>
+                    <p class="card-text">Waktu :  {{ $booking['waktu_mulai']}} s/d {{ $booking['waktu_selesai']}}</p>
                     <p class="card-text">Kepentingan : {{ $booking['keperluan']}} </p>
                     <div class="btn-group mt-2" role="group" aria-label="Basic example">
-                        <a href="#" ><button class="btn btn-info">Unduh Surat Izin</button> </a>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg-bukti{{$i+=1}}">Lihat Surat Izin</button>
                     <button class="btn btn-danger ml-1" onclick="document.getElementById('delete_user_booking').submit();">Batalkan Peminjaman</button> </a>
+                    </div>
+                </div>
+                <div class="modal fade bd-example-modal-lg-bukti{{$i}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h1 class="text-center pt-3 pb-1">Bukti Peminjaman</h1>
+                                    <hr>
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-10 h-100 pb-5 pr-5 pl-5 cropfotoprofil">
+                                            <img src="{{ Cookie::get('address_web_server').$booking["file"]}}" alt="Image">
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center pb-5">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -18,7 +18,7 @@
     Password Baru
   </span>
   <div class="wrap-input100 validate-input m-b-36">
-    <input class="input100" type="text" name="new_password">
+    <input class="input100" type="text" name="new_password" id="new_password">
     <span class="focus-input100"></span>
   </div>
 
@@ -26,11 +26,24 @@
     Konfirmasi Password Baru
   </span>
   <div class="wrap-input100 validate-input m-b-36">
-    <input class="input100" type="text" name="confirm_password">
+    <input class="input100" type="text" name="confirm_password" id="confirm_password">
     <span class="focus-input100"></span>
   </div>
     <a href="{{ URL::to('profile/edit') }}"><button type="button" class="btn btn-outline-info btn-lg">Kembali</button></a>
-    <button type="submit" class="btn btn-info btn-lg">Submit</button>
+    <button type="submit" class="btn btn-info btn-lg" onclick="return validate()">Submit</button>
+    <div class="registrationFormAlert" id="divCheckPasswordMatch" style="color: red"></div>
   </form>
 </div>
+<script type="text/javascript">
+  function validate() {
+      var password = document.getElementById("new_password").value;
+      var confirmPassword = document.getElementById("confirm_password").value;
+      if (password != confirmPassword) {
+        $("#divCheckPasswordMatch").html("* Password tidak cocok");
+        document.getElementById("confirm_password").focus();
+          return false;
+      }
+      return true;
+  }
+</script>
 @endsection

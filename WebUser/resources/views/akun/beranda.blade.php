@@ -3,7 +3,9 @@
 @section('content')
 @php
     use App\Http\Controllers\GuzzleController;
-    GuzzleController::getBooking(Cookie::get('access_token'));
+    if(!session('filter_booking')){
+        GuzzleController::getBooking(Cookie::get('access_token'));
+    }
 @endphp
 @include('inc.navberanda')
         <!-- Masthead-->
@@ -53,27 +55,111 @@
         </section>
         
         <section class="Jadwal-section bg-light" id="Jadwal">
-            <br><br><label for="" style="align-items: center; font-size: 32px"> Jadwal Peminjaman</label><br><br>
-            <div class="container">
+            <br><br><label for="" style="align-items: center; font-size: 32px"> Jadwal Peminjaman</label>
+            <br><label style="align-items: center; font-size: 18px" class="text-primary"> Filter Peminjaman</label><br><br>
+            <div class="container p-b-11">
+                <form method="POST" action="{{ route('filter_bookings')}}">
+                    @csrf
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <span class="txt1 p-b-11">
+                                Nama Ruangan
+                            </span>
+                            <div class="mt-3 validate-input m-b-36">
+                                <select class="custom-select" name="r_id" required>
+                                <option value="">Pilih salah satu</option>
+                                <option value="1">{{ Cache::get('1_nama')}}</option>
+                                <option value="2">{{ Cache::get('2_nama')}}</option>
+                                <option value="3">{{ Cache::get('3_nama')}}</option>
+                                <option value="4">{{ Cache::get('4_nama')}}</option>
+                                <option value="5">{{ Cache::get('5_nama')}}</option>
+                                </select>
+                                <div class="invalid-feedback">Harus diisi!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <span class="txt1">
+                                Tanggal Pinjam
+                            </span>
+                        <input value="{{ Cache::get('booking_tanggal_pinjam')}}" name="tanggal_pinjam" type="text" class="mt-3 datepicker-here form-control wrap-input100 validate-input m-b-36" data-language='en' placeholder="Gunakan kalender pop-up" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <span class="txt1 p-b-11">
+                                Waktu Mulai
+                            </span>
+                            <div class="mt-3 d-flex align-items-center">
+                                <input value="{{ Cache::get('booking_waktu_mulai')}}" id="timepkr" name="waktu_mulai" style="float:left;" class="wrap-input100 form-control" placeholder="HH:MM" required />
+                                <button type="button" class="btn btn-primary" onclick="showpickers('timepkr',24)" style="height:40px;width:20%;float:left;"></button>
+                            </div>
+                        <div class="timepicker"></div> 
+                        </div>
+                    </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <span class="txt1 p-b-11">
+                            Waktu Selesai
+                        </span>
+                        <div class="mt-3 d-flex align-items-center">
+                            <input value="{{ Cache::get('booking_waktu_selesai')}}" id="timepkr1" name="waktu_selesai" style="float:left;" class="wrap-input100 form-control" placeholder="HH:MM" required/>
+                            <button type="button" class="btn btn-primary" onclick="showpickers('timepkr1',24)" style="height:40px;width:20%;float:left;"></button>
+                          </div>
+                      <div class="timepicker1"></div> 
+                    </div>
+                </div>
+                <div class="col-md-2 mt-4">
+                    <button type="submit" class="btn btn-info btn-lg">Cari</button>
+                </div>
+            </form>
+ 
+            <div class="container mt-2">
+                <br><br>
                 <div class="row justify-content-center">
                     @if(count(Cache::get('bookings')['bookings']) != 0)
+                    <?php $i=0 ?>
                     @foreach (Cache::get('bookings')['bookings'] as $booking)
                     <div class="col-sm-4 mt-4">
                         <div class="card">
                           <div class="card-body">
                           <h5 class="card-title mb-4">{{ $booking["r_nama"]}}</h5>
-                          <p class="card-subtitle">Tanggal Selesai</p>
-                          <h6 class="card-text text-info">{{ $booking["tanggal_selesai"] }}</h6>
-                          <p class="card-subtitle">Tanggal Mulai</p>
-                          <h6 class="card-text text-info mb-5">{{ $booking["tanggal_mulai"] }}</h6>
-                              <a href="#" class="btn btn-outline-info">Unduh Surat Izin</a>
+                          <p class="card-subtitle">Dipinjam oleh</p>
+                          <h6 class="card-text text-secondary mb-4">{{ $booking["u_nama"] }}</h6>
+                          <p class="card-subtitle">Tanggal Pinjam</p>
+                          <h6 class="card-text text-info">{{ $booking["tanggal_pinjam"] }}</h6>
+                          <p class="card-subtitle">Waktu</p>
+                          <h6 class="card-text text-info mb-5">{{ $booking["waktu_mulai"] }} s/d {{ $booking["waktu_selesai"] }}</h6>
+                          <a href="" class="btn btn-outline-info" data-toggle="modal" data-target=".bd-example-modal-lg-bukti{{$i+=1}} ">Lihat Surat Izin</a>
                           </div>
                         </div>
                       </div>
+                      <div class="modal fade bd-example-modal-lg-bukti{{$i}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h1 class="text-center pt-3 pb-1">Bukti Peminjaman</h1>
+                                        <hr>
+                                        <div class="row justify-content-center">
+                                            <div class="col-lg-10 h-100 pb-5 pr-5 pl-5 cropfotoprofil">
+                                                <img src="{{ Cookie::get('address_web_server').$booking["file"]}}" alt="Image">
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center pb-5">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                     @else
                     <tr>
-                        <td align="center" colspan="8"><p class="text-info">Tidak ada peminjaman ruang pada hari ini</p></td>
+                        <td align="center" colspan="8"><p class="text-info">Tidak ada peminjaman ruang</p></td>
                     </tr>
                     @endif
                 </div>
@@ -282,7 +368,6 @@
                                     <div class="row">
                                         <div class="col-lg-4 pb-5 pr-5 pl-5">
                                             <div><img src="{{ Cookie::get('address_web_server').Cache::get('5_foto') }}" alt="Image" class="img-fluid"></div>
-                                        
                                         </div>
                                         <div class="col-lg-7 pl-lg-10">
                                             <div class="mb-5 text-lg-left">

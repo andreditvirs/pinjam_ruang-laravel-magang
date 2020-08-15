@@ -14,6 +14,9 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{ asset('css/styles.css')}}" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ asset('custom/css/bootstrap-custom.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('air-datepicker\dist\css\datepicker.css') }}">
+        <link rel="stylesheet" href="{{ asset('timepicker\tpicker.css') }}">
         @include('inc.style')
     </head>
 
@@ -38,5 +41,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+        <script src="{{ asset('air-datepicker\dist\js\datepicker.js') }}"></script>
+        <script src="{{ asset('air-datepicker\dist\js\i18n\datepicker.en.js') }}"></script>
+        <script src="{{ asset('timepicker\tpicker-custom.js') }}"></script>
     </body>
 </html>

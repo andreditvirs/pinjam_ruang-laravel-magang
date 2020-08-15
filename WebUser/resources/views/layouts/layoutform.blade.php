@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{{config('app.name')}}</title>
+		<title>{{config('app.name')}}</title>
+	<link rel="icon" type="image/png" href="{{ asset('assets/img/LOGO.png')}}" />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="{{ asset('akun/vendor/bootstrap/css/bootstrap.min.css') }}">
 <!--===============================================================================================-->
@@ -25,7 +26,17 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('akun/css/main.css') }}">
 <!--===============================================================================================-->
 <link rel="stylesheet" href="{{ asset('air-datepicker\dist\css\datepicker.css') }}">
+<link rel="stylesheet" href="{{ asset('timepicker\tpicker.css') }}">
+<link rel="stylesheet" href="{{ asset('bs-wizard\wizard.css') }}">
 <style>
+	
+    .cropfotoprofil img {
+      object-fit: cover; /* Do not scale the image */
+      object-position: center; /* Center the image within the element */
+      height: 100%;
+      width: 100%;
+    }
+	
 	/* Style untuk menyembunyikan spin button input type number */
 	input::-webkit-outer-spin-button,
 	input::-webkit-inner-spin-button {
@@ -57,16 +68,12 @@
 	<script src="{{ asset('akun/vendor/bootstrap/js/popper.js') }}"></script>
 	<script src="{{ asset('akun/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <!--===============================================================================================-->
-	<script src="{{ asset('akun/vendor/select2/select2.min.js') }}"></script>
-<!--===============================================================================================-->
-	<script src="{{ asset('akun/vendor/daterangepicker/moment.min.js') }}"></script>
-	<script src="{{ asset('akun/vendor/daterangepicker/daterangepicker.js') }}"></script>
-<!--===============================================================================================-->
 	<script src="{{ asset('akun/vendor/countdowntime/countdowntime.js') }}"></script>
 <!--===============================================================================================-->
 	<script src="{{ asset('akun/js/main.js') }}"></script>
 <!--===============================================================================================-->
 	<script src="{{ asset('air-datepicker\dist\js\datepicker.js') }}"></script>
 	<script src="{{ asset('air-datepicker\dist\js\i18n\datepicker.en.js') }}"></script>
+	<script src="{{ asset('timepicker\tpicker.js') }}"></script>
     </body>
 </html>

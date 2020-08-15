@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Cookie;
 use GuzzleHttp\Cookie\CookieJar;
-use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\GuzzleController;
 
 class HomeAuthMiddleware
 {
@@ -19,7 +19,8 @@ class HomeAuthMiddleware
     public function handle($request, Closure $next)
     {
         $cookie = Cookie::get('access_token');
-        if (!is_null($cookie)) {
+        $valid = GuzzleController::validasiUser($cookie);
+        if (!is_null($cookie) || $valid) {
             return $next($request);
         }
         return redirect('login');
