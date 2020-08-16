@@ -17,18 +17,22 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_room"
+        android:name="com.silfi.peminjaman_ruang.room.RoomFragment"
+        android:label="@string/menu_room"
+        tools:layout="@layout/fragment_room" >
+                <action
+                    android:id="@+id/action_HomeFragment_to_RoomFragment"
+                    app:destination="@id/nav_room" />
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_profile"
         android:name="com.silfi.peminjaman_ruang.profile.ProfileFragment"
         android:label="@string/menu_profil"
         tools:layout="@layout/fragment_profile" >
-                <action
-                    android:id="@+id/action_HomeFragment_to_ProfileFragment"
-                    app:destination="@id/nav_profile" />
+        <action
+            android:id="@+id/action_HomeFragment_to_ProfileFragment"
+            app:destination="@id/nav_profile" />
     </fragment>
-
-<!--    <fragment-->
-<!--        android:id="@+id/nav_logout"-->
-<!--        android:name="com.silfi.peminjaman_ruang.ui.logout.LogoutFragment"-->
-<!--        android:label="@string/menu_logout"-->
-<!--        tools:layout="@layout/fragment_logout" />-->
 </navigation>

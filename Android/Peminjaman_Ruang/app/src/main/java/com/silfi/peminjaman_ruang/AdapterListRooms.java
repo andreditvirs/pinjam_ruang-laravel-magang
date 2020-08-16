@@ -1,10 +1,13 @@
 package com.silfi.peminjaman_ruang;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,7 +34,7 @@ public class AdapterListRooms extends RecyclerView.Adapter<AdapterListRooms.Hold
     @NonNull
     @Override
     public HolderItem onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layout = LayoutInflater.from(context).inflate(R.layout.beranda_rows, parent, false);
+        View layout = LayoutInflater.from(context).inflate(R.layout.room_row, parent, false);
         HolderItem holder = new HolderItem(layout);
         return holder;
     }
@@ -41,10 +44,19 @@ public class AdapterListRooms extends RecyclerView.Adapter<AdapterListRooms.Hold
         Room room = mListRoom.get(position);
 
         holder.tv_nama.setText(room.getNama());
-//        holder.tv_nrp.setText(room.getNrp());
 
         // Loading Image
         Glide.with(context).load(URL_STORAGE + room.getFoto()).thumbnail(0.5f).transition(new DrawableTransitionOptions().crossFade()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.thumbnail);
+        holder.lL_room.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, RoomDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", room.getId());
+                i.putExtras(bundle);
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -54,13 +66,14 @@ public class AdapterListRooms extends RecyclerView.Adapter<AdapterListRooms.Hold
 
     public class HolderItem extends RecyclerView.ViewHolder{
         ImageView thumbnail;
-        TextView tv_nama, tv_nrp;
+        TextView tv_nama;
+        LinearLayout lL_room;
 
         public HolderItem(View v){
             super(v);
             thumbnail = (ImageView) v.findViewById(R.id.img_cover);
             tv_nama = (TextView) v.findViewById(R.id.tv_nama);
-//            tv_nrp = (TextView) v.findViewById(R.id.tv_nrp);
+            lL_room = v.findViewById(R.id.lL_list_room);
         }
     }
 

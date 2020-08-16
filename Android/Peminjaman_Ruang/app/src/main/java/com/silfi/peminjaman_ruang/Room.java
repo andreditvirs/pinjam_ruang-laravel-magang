@@ -1,5 +1,7 @@
 package com.silfi.peminjaman_ruang;
 
+import androidx.annotation.NonNull;
+
 public class Room {
     private int id;
     private String nama;

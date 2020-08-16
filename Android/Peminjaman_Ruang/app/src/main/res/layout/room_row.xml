@@ -8,6 +8,7 @@
     android:layout_margin="4dp"
     app:cardElevation="4dp">
     <LinearLayout
+        android:id="@+id/lL_list_room"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -22,7 +23,7 @@
                 android:id="@+id/tv_nama"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nama Mahasiswa"
+                android:text="Nama Ruangan"
                 android:fontFamily="@font/poppins_medium"
                 android:textSize="18sp"
                 android:layout_gravity="center"

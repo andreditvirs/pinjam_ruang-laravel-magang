@@ -2,13 +2,12 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_list_mahasiwa"
+    android:id="@+id/fragment_list_room"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:overScrollMode="never"
-    tools:context=".home.HomeFragment"
-    android:background="@color/colorwhite">
+    tools:context=".room.RoomFragment">
     <RelativeLayout
         android:id="@+id/rL_list_booking"
         android:background="@color/colorwhite"
@@ -19,7 +18,7 @@
             android:id="@+id/txtV_Judul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pinjam Ruang \n Diskominfo Jatim"
+            android:text="Daftar Ruangan \nDiskominfo Jatim"
             android:layout_marginTop="16dp"
             android:minLines="2"
             android:fontFamily="@font/poppins_medium"
@@ -27,21 +26,8 @@
             android:textAlignment="center"
             android:textColor="@color/colorBackground"
             android:layout_marginBottom="8dp" />
-        <TextView
-            android:id="@+id/txtV_SubJudul"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Daftar Peminjaman Terkini"
-            android:layout_marginTop="16dp"
-            android:minLines="2"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="16sp"
-            android:textAlignment="center"
-            android:textColor="@color/colorBackground"
-            android:layout_marginBottom="14dp"
-            android:layout_below="@id/txtV_Judul"/>
         <ProgressBar
-            android:id="@+id/progressBar_home"
+            android:id="@+id/progressBar_room"
             style="?android:attr/progressBarStyle"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
@@ -49,8 +35,8 @@
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_centerInParent="true"/>
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_below="@id/txtV_SubJudul"
-            android:id="@+id/rcV_bookings"
+            android:layout_below="@id/txtV_Judul"
+            android:id="@+id/rcV_rooms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:overScrollMode="never"

@@ -1,12 +1,20 @@
 package com.silfi.peminjaman_ruang;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -21,78 +29,66 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.annotation.Nullable;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.silfi.peminjaman_ruang.Constant.API_USER_AUTH;
+import static com.silfi.peminjaman_ruang.Constant.API_LIST_BOOKINGS;
+import static com.silfi.peminjaman_ruang.Constant.API_LIST_ROOMS;
 
-public class HomeActivity extends AppCompatActivity {
+public class RoomDetailActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
+    private ApiInterfaceAuth apiInterface;
+    private ImageView foto;
+    private TextView fasilitas, kapasitas, lantai;
+    private TextView nip_peminjam, nama_peminjam, tanggal_mulai_peminjaman, tanggal_selesai_peminjaman, keperluan_peminjam;
+    private TextView status_ruangan;
+    Room room;
     RequestQueue mRequest;
-    TextView username, nip;
-    ImageView foto;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        setContentView(R.layout.activity_room_detail);
+        Bundle bundle = getIntent().getExtras();
+        int id = bundle.getInt("id");
+
+        Toolbar toolbar = findViewById(R.id.toolbar_room_detail);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        View navView = navigationView.inflateHeaderView(R.layout.nav_header_activity_awal);
+        collapsingToolbarLayout = findViewById(R.id.collapsing);
+        collapsingToolbarLayout.setExpandedTitleColor(Color.parseColor("#44ffffff"));
+        fasilitas = findViewById(R.id.room_fasilitas);
+        kapasitas = findViewById(R.id.room_kapasitas);
+        lantai = findViewById(R.id.room_lantai);
+        foto = findViewById(R.id.room_foto);
 
-        username = navView.findViewById(R.id.nav_header_username);
-        nip = navView.findViewById(R.id.nav_header_nip);
-        foto = navView.findViewById(R.id.nav_header_foto);
-
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-
-
-        request();
+        requestRoomDetail(id);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-
-    private void request(){
-        JsonObjectRequest requestRooms = new JsonObjectRequest(Request.Method.POST, API_USER_AUTH+"/details", null,
+    private void requestRoomDetail(int id){
+        JsonObjectRequest requestRooms = new JsonObjectRequest(Request.Method.GET, API_LIST_ROOMS+"/"+id, null,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject object) {
                         try{
-                            JSONObject profiles = object.getJSONObject("profile");
-                            Profile profile = new Profile(profiles.getString("nip"),
-                                    profiles.getString("username"),
-                                    profiles.getString("foto"));
-                            setProfile(profile);
+                            if(!object.getBoolean("error")){
+                                JSONObject rooms = object.getJSONObject("room");
+                                room = new Room(rooms.getInt("id"),
+                                        rooms.getString("nama"),
+                                        rooms.getString("lantai"),
+                                        rooms.getString("kapasitas"),
+                                        rooms.getString("fasilitas"),
+                                        rooms.getString("foto"));
+                                setRoomDetail(room);
+                            }
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
@@ -105,22 +101,24 @@ public class HomeActivity extends AppCompatActivity {
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(RoomDetailActivity.this);
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/json; charset=UTF-8");
                 params.put("Authorization", "Bearer "+ prefs.getString("access_token", null));
                 return params;
             }
         };
-        mRequest = Volley.newRequestQueue(HomeActivity.this);
+        mRequest = Volley.newRequestQueue(RoomDetailActivity.this);
         mRequest.add(requestRooms);
     }
 
-    public void setProfile(Profile profile){
-        nip.setText(profile.getNip());
-        username.setText(profile.getUsername());
+    public void setRoomDetail(Room room){
+        collapsingToolbarLayout.setTitle(room.getNama());
+        lantai.setText(room.getLantai());
+        fasilitas.setText(room.getFasilitas());
+        kapasitas.setText(room.getKapasitas());
         Glide.with(this)
-                .load(Constant.URL_STORAGE+profile.getFoto())
+                .load(Constant.URL_STORAGE+room.getFoto())
                 .placeholder(R.drawable.jatim)
                 .error(R.drawable.jatim)
                 .listener(new RequestListener<Drawable>() {
