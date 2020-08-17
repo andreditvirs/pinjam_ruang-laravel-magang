@@ -14,36 +14,62 @@
                 </div>
                 @endif
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-6">
                         <div class="form-group">
                             {{ Form::label('r_id', 'ID Ruangan') }}
                             {{ Form::text('r_id', $booking['r_id'], ['class'=>'form-control', 'placeholder'=>'Masukkan ID Ruangan']) }}
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-6">
                         <div class="form-group">
                             {{ Form::label('u_id', 'ID Peminjam') }}
                             {{ Form::text('u_id', $booking['u_id'], ['class'=>'form-control', 'placeholder'=>'Masukkan ID Peminjam']) }}
                         </div>
                     </div>
-                    <div class="col-md-4">                    
-                        <div class="form-group">
-                            {{ Form::label('tanggal_mulai', 'tanggal_mulai') }}
-                            {{ Form::text('tanggal_mulai', $booking['tanggal_mulai'], ['class'=>'form-control', 'placeholder'=>'Masukkan Tanggal Mulai']) }}
-                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            {{ Form::label('tanggal_selesai', 'tanggal_selesai') }}
-                            {{ Form::text('tanggal_selesai', $booking['tanggal_selesai'], ['class'=>'form-control', 'placeholder'=>'Masukkan Tanggal Selesai']) }}
+
+                    <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ Form::label('tanggal_pinjam', 'Tanggal Peminjaman') }}
+                        <input name="tanggal_pinjam" type="text" class="datepicker-here form-control" data-language='en' required>
                         </div>
-                    </div>
                 </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        {{ Form::label('waktu_mulai', 'Waktu Mulai') }}
+                       
+                       <div class= style="margin-top:10px;float:left;">
+                            <input name="waktu_mulai" id="timepkr" style="width:100px;float:left;" class="wrap-input100 form-control" placeholder="HH:MM" required/>
+                            <button class="btn btn-primary" onclick="showpickers('timepkr',24)" style="width:40px;float:left;"><i class="fa fa-clock-o"></i>
+                        </div>
+                    <div class="timepicker"></div> 
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                    <div class="form-group">
+                        {{ Form::label('waktu_selesai', 'Waktu Selesai') }}
+                        <div class= style="margin-top:10px;float:left;">
+                            <input name="waktu_selesai"id="timepkr1" style="width:100px;float:left;" class="wrap-input100 form-control" placeholder="HH:MM" required />
+                            <button class="btn btn-primary" onclick="showpickers('timepkr1',24)" style="width:40px;float:left;"><i class="fa fa-clock-o"></i>
+                          </div>
+                      <div class="timepicker1"></div> 
+                        </div>
+                </div>
+            </div>
                 <div class="row">
-                    <div class="col-md-12">  
+                 <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="status">Keperluan</label>
+                                <input name="keperluan" id="status" type="text"  class="form-control" required/>
+                            </div>
+                        </div>
+            </div>
+                <div class="row">
+                    <div class="col-md-4">  
                         <div class="form-group">
-                            {{ Form::label('keperluan', 'Keperluan') }}
-                            {{ Form::textarea('keperluan', $booking['keperluan'], ['class'=>'form-control', 'placeholder'=>'Masukkan Keperluan']) }}
+                            {{ Form::label('file', 'Foto Surat Izin') }}
+                            {{ Form::file('file', ['class'=>'form-control','required'=>true]) }}
                         </div>
                     </div>
                 </div>

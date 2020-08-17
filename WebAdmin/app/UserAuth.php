@@ -25,7 +25,9 @@ class UserAuth extends Authenticatable
      *
      * @var array
      */
+    
     protected $hidden = [
-        'password', 'remember_token',
+        'id', 'password', 'remember_token', 'department_id', 'jabatan_id', 'created_at', 'updated_at'
+
     ];
 }

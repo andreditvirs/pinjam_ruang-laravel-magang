@@ -65,6 +65,16 @@ class LoginController extends Controller
   
         // Attempt to log the user in
         // Passwordnya pake bcrypt
+        //pasword sebelum di kirim langsung, dienkripsi dulu 
+        //jadi pas kalo ada attacker di db ga bisa liat password. karna passwd ush di
+        //enkripsi.  tapi username ga ikut. 
+
+        //cara abcrypt, contohnya ada di Http/controllers/auth/registercrontroller.php 
+        //(Auth::guard ('') )--- > maksudnya, ke kelas Auth (dir: config/auth.php )
+
+        //!important!
+        //satu section ini untuk pengaturan agar di web, user tidak bisa
+        //langsung ngetik url/Admin
       if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
           // if successful, then redirect to their intended location
         return redirect()->intended('/admin');

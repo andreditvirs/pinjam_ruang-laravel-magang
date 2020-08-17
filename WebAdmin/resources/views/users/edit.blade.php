@@ -61,6 +61,27 @@
                         </div>
                         
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ Form::label('username', 'Username') }}
+                                {{ Form::text('username', $user['username'], ['class'=>'form-control', 'placeholder'=>'Masukkan Username']) }}    
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ Form::label('password', 'Password') }}
+                                {{ Form::input('password', 'password', '',['class'=>'form-control', 'placeholder'=>'Masukkan Password']) }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ Form::label('password_confirmation', 'Konfirmasi Password') }}
+                                {{ Form::input('password', 'password_confirmation', '',['class'=>'form-control', 'placeholder'=>'Masukkan Ulang Password']) }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-footer">

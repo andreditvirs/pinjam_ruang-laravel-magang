@@ -6,12 +6,15 @@ use App\UserAuth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
 class UserAuthController extends Controller
 {
+    public $successStatus = 200;
+    
     public function index()
     {
         $users = UserAuth::latest()->get();
@@ -22,135 +25,6 @@ class UserAuthController extends Controller
         ], 200);
     }
 
-    public function store(Request $request)
-    {
-        //validate data
-        $validator = Validator::make($request->all(), [
-            'title'     => 'required',
-            'content'   => 'required',
-        ],
-            [
-                'title.required' => 'Masukkan Title UserAuth !',
-                'content.required' => 'Masukkan Content UserAuth !',
-            ]
-        );
-
-        if($validator->fails()) {
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Silahkan Isi Bidang Yang Kosong',
-                'data'    => $validator->errors()
-            ],400);
-
-        } else {
-
-            $user = UserAuth::create([
-                'title'     => $request->input('title'),
-                'content'   => $request->input('content')
-            ]);
-
-
-            if ($user) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'UserAuth Berhasil Disimpan!',
-                ], 200);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'UserAuth Gagal Disimpan!',
-                ], 400);
-            }
-        }
-    }
-
-
-    public function show($id)
-    {
-        $user = UserAuth::whereId($id)->first();
-
-        if ($user) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Detail UserAuth!',
-                'data'    => $user
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'UserAuth Tidak Ditemukan!',
-                'data'    => ''
-            ], 404);
-        }
-    }
-
-    public function update(Request $request)
-    {
-        //validate data
-        $validator = Validator::make($request->all(), [
-            'title'     => 'required',
-            'content'   => 'required',
-        ],
-            [
-                'title.required' => 'Masukkan Title UserAuth !',
-                'content.required' => 'Masukkan Content UserAuth !',
-            ]
-        );
-
-        if($validator->fails()) {
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Silahkan Isi Bidang Yang Kosong',
-                'data'    => $validator->errors()
-            ],400);
-
-        } else {
-
-            $user = UserAuth::whereId($request->input('id'))->update([
-                'title'     => $request->input('title'),
-                'content'   => $request->input('content'),
-            ]);
-
-
-            if ($user) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'UserAuth Berhasil Diupdate!',
-                ], 200);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'UserAuth Gagal Diupdate!',
-                ], 500);
-            }
-
-        }
-
-    }
-
-    public function destroy($id)
-    {
-        $user = UserAuth::findOrFail($id);
-        $user->delete();
-
-        if ($user) {
-            return response()->json([
-                'success' => true,
-                'message' => 'UserAuth Berhasil Dihapus!',
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'UserAuth Gagal Dihapus!',
-            ], 500);
-        }
-
-    }
-
-    public $successStatus = 200;
-
     public function login(){
         if(Auth::attempt(['username' => request('username'), 'password' => request('password')])){
             $user = Auth::user();
@@ -158,7 +32,7 @@ class UserAuthController extends Controller
             return response()->json(['error' => false, 'success' => $success], $this->successStatus);
         }
         else{
-            return response()->json(['error'=>true, 'error_msg' => 'Unauthorized'], 401);
+            return response()->json(['error'=>true, 'msg' => 'Unauthorized']);
         }
     }
 
@@ -171,15 +45,27 @@ class UserAuthController extends Controller
             'nama' => 'required',
             'jenis_kelamin' => 'required',
             'department_id' => 'required',
-            'foto'=>'required|mimes:jpg,png,jpeg,JPG'
+            'foto'=>'required|mimes:jpg,png,jpeg,JPG',
+            'jabatan_id' => 'required'
         ]);
 
         $input = $request->all();
 
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);            
+            return response()->json(['error'=>true, 'msg'=>$validator->errors()]);            
+        } 
+
+        $checkusername=$this->availableUsername($input['username']);
+        if(!$checkusername){
+            return response()->json(['error' => true, 'msg'=>'Username']);
         }
 
+        $checknip=$this->availableNip($input['nip']);
+        if (!$checknip) {
+            return response()->json(['error' => true, 'msg'=>'Nip']);
+            # code...
+        }
+        
         $foto="";
  
         if (!$request->file('foto')) {
@@ -194,21 +80,41 @@ class UserAuthController extends Controller
         $success['token'] =  $user->createToken('nApp')->accessToken;
         $success['nama'] =  $user->nama;
 
-        return response()->json(['success'=>$success], $this->successStatus);
+        return response()->json(['error'=>false], $this->successStatus);
     }
+    public function availableUsername($username){
+        $checkusername = DB::table('users')->select('nama')->where('username', '=', $username)->first();
+        if(is_null($checkusername)){
+            return true;
+        }else{
+           return false;
+        }
+       }
 
+    public function availableNip($nip){
+        $checknip = DB::table('users')->select('nip')->where('nip', '=', $nip)->first();
+        if (is_null($checknip)) {
+            return true;
+        }else{
+            return false;
+        }
+    }
     public function details()
     {
         $user = Auth::user();
-        return response()->json(['success' => $user], $this->successStatus);
+        $user_department = DB::table('departments')->select('nama')->where('departments.id', '=', $user->department_id)->first();
+        $user_position_in_department = DB::table('position_in_departments')->select('nama')->where('position_in_departments.id', '=', $user->jabatan_id)->first();
+        $user->department_name = $user_department->nama;
+        $user->position_in_department_name = $user_position_in_department->nama;
+        return response()->json(['error' => false, 'profile' => $user], $this->successStatus);
     }
 
     public function logout(){   
         if (Auth::check()) {
             Auth::user()->token()->revoke();
-            return response()->json(['success' =>'logout_success'],200); 
+            return response()->json(['error'=>false,'msg' =>'logout_success'],200); 
         }else{
-            return response()->json(['error' =>'api.something_went_wrong'], 500);
+            return response()->json(['error'=>true, 'msg' =>'api.something_went_wrong'], 500);
         }
     }
 
@@ -219,7 +125,7 @@ class UserAuthController extends Controller
         $rules = array(
             'old_password' => 'required',
             'new_password' => 'required|min:6',
-            'confirm_password' => 'required|same:new_password',
+            // 'confirm_password' => 'required|same:new_password',
         );
         $validator = Validator::make($input, $rules);
         if ($validator->fails()) {
@@ -244,6 +150,48 @@ class UserAuthController extends Controller
             }
         }
         return \Response::json($arr);
+    }
+
+    public function editprofile(Request $request)
+    {
+        $userauth = Auth::user();
+        $id = $userauth->id;
+
+        $validator = Validator::make($request->all(), [
+            'nip' => 'required|integer',
+            'username' => 'required',
+            'nama' => 'required',
+            'jenis_kelamin' => 'required',
+            'department_id' => 'required',
+            'foto'=>'required|mimes:jpg,png,jpeg,JPG',
+            'jabatan_id' => 'required'
+        ]);
+
+        $user = UserAuth::findOrFail($id);
+        $user->nip = $request->get('nip');
+        $user->nama = $request->get('nama');
+        $user->username = $request->get('username');
+        $user->jenis_kelamin = $request->get('jenis_kelamin');
+        $user->department_id = $request->get('department_id');
+        $user->jabatan_id = $request->get('jabatan_id');
+
+        // $input = $request->all();
+        if ($validator->fails()) {
+            return response()->json(['error'=>true]);            
+        }
+
+        $foto="";
+ 
+        if (!$request->file('foto')) {
+            return response()->json(['error'=>true]);
+        }else{
+            unlink(storage_path().'/app/public/'.$user->foto);
+            $user->foto = $request->file('foto')->store('users','public');                
+        }
+
+        $user->save();
+        
+        return response()->json(['error'=>false], $this->successStatus);
     }
 
 }

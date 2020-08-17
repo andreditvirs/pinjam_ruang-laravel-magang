@@ -46,7 +46,7 @@ class RoomsController extends Controller
         $request->validate([
             'nama'=>'required',
             'lantai'=>'required',
-            'kapasitas'=>'required|integer',
+            'kapasitas'=>'required|integer|max:1000',
             'fasilitas'=>'required',
             'foto'=>'required|mimes:jpg,png,jpeg,JPG'
         ]);
@@ -100,7 +100,7 @@ class RoomsController extends Controller
         $rules=[    
             'nama'=>'required',
             'lantai'=>'required',
-            'kapasitas'=>'required|integer',
+            'kapasitas'=>'required|integer|max:1000',
             'fasilitas'=>'required',
             'foto'=>'required|mimes:jpg,png,jpeg,JPG'
         ];

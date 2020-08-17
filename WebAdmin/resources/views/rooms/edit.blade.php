@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group">
                             {{ Form::label('kapasitas', 'Kapasitas Ruangan') }}
-                            {{ Form::text('kapasitas', $room['kapasitas'], ['class'=>'form-control', 'placeholder'=>'Masukkan Harga Ruangan']) }}
+                            {{ Form::text('kapasitas', $room['kapasitas'], ['class'=>'form-control', 'placeholder'=>'Masukkan Kapasitas Ruangan']) }}
                         </div>
                     </div>
                     <div class="col-md-6">

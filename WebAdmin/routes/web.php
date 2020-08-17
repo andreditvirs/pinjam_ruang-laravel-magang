@@ -16,8 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function(){
   return view('welcome');
 });
-
+//ada 2 cara untuk memunculkan tombol2 login regis di welcome page
+//1. 
 // Authentication Routes...
+//maksudnya selain yg dikoding, gamuncul
+//cuma muncul yg dibawah
 Route::get('login', [
     'as' => 'login',
     'uses' => 'Auth\LoginController@getLogin'
@@ -35,7 +38,12 @@ Route::post('logout', [
     return view('notadmin');
   })->middleware('auth:user');
 
+
+  //2.
 // Auth::routes(['register' => false, 'reset' => false]);
+//untuk memprevent yg dikoding saja. jadi selain itu, dimunculin semua
+
+
 
 Route::group(['middleware' => 'auth:admin'], function(){
     Route::get('/admin', 'AdminsController@index');

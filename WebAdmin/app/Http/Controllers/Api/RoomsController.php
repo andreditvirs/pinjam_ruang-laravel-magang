@@ -38,7 +38,7 @@ class RoomsController
         if (is_null($room)) {
             // return response
             $response = [
-                'success' => false,
+                'error' => true,
                 'message' => 'Room not found.',
             ];
             return response()->json($response, 404);
@@ -46,7 +46,7 @@ class RoomsController
 
         // return response
         $response = [
-            'success' => true,
+            'error' => false,
             'message' => 'Room retrieved successfully.',
             'room' => $room
         ];

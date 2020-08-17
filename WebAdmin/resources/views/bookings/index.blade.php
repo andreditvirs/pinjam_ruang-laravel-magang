@@ -13,11 +13,21 @@
              </div>
          </div>
          <div class="card-body">
-            @if (Session::has('message'))
+            @if (Session::has('success'))
             <div id="alert-msg" class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                {{ Session::get('message') }}
+                {{ Session::get('success') }}
             </div>
+            @else 
+                {{-- @if (Session::has('error'))
+                <div id="alert-msg" class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{ Session::get('error') }}
+                </div>
+                
+                @endif --}}
+                
+            
             @endif
             <div class="row">
                 <div class="col-md-12">
@@ -28,8 +38,9 @@
                                 <th>ID Ruangan</th>
                                 <th>ID Peminjam</th>
                                 <th>Keperluan</th>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Selesai</th>
+                                <th>Tanggal Pinjam</th>
+                                <th>Waktu Mulai</th>
+                                <th>Waktu Selesai</th>
                                 <th>File Bukti Peminjaman</th>
                                 <th>Aksi</th>
                             </tr>
@@ -42,9 +53,10 @@
                                 <td>{{ $booking['r_id'] }}</td>
                                 <td>{{ $booking['u_id'] }}</td>
                                 <td>{{ $booking['keperluan'] }}</td>
-                                <td>{{ $booking['tanggal_mulai'] }}</td>
-                                <td>{{ $booking['tanggal_selesai'] }}</td>
-                                <td class="text-center"><img src="{{ asset('storage/'.$booking['foto']) }}" width="100"/></td>
+                                <td>{{ $booking['tanggal_pinjam'] }}</td>
+                                <td>{{ $booking['waktu_mulai'] }}</td>
+                                <td>{{ $booking['waktu_selesai'] }}</td>
+                                <td class="text-center"><img src="{{ asset('storage/'.$booking['file']) }}" width="100"/></td>
                                 <td class="text-center">
                                     <form method="POST" action="{{ URL::to('bookings/'.$booking['id']) }}">
                                         {{ csrf_field() }}

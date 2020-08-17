@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 Use Redirect;
 
 class UsersController extends Controller
@@ -22,7 +23,7 @@ class UsersController extends Controller
                 ->leftJoin('departments', 'users.department_id', '=', 'departments.id')
                 ->leftJoin('position_in_departments', 'users.jabatan_id', '=', 'position_in_departments.id')
                 ->select('users.*', 'departments.nama as department_nama', 'position_in_departments.nama as jabatan')
-                ->paginate(5);
+                ->paginate(10);
 
         return view('users.index', compact('users'));
         // return view('users.index',compact('users'))
@@ -68,6 +69,8 @@ class UsersController extends Controller
         $user->department_id=$request->get('department_id');
         $user->jabatan_id=$request->get('jabatan_id');
         $user->foto=$foto;
+        $user->username=$request->get('username');
+        $user->password=Hash::make($request->get('password'));
         $user->save();
 
         return redirect()->route('users.index')

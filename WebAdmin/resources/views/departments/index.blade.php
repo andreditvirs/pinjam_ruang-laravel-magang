@@ -4,7 +4,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Data Departmen</h3>
+                <h3 class="card-title">Data Bidang</h3>
                 <div class="card-tools">
                  <a href="{{ URL::to('departments/create')}}" class="btn btn-tool">
                      <i class="fa fa-plus"></i>

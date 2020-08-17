@@ -6,9 +6,8 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Pinjam Ruang') }}</title>
-
+    <link rel="icon" type="image/png" href="{{ asset("storage/site/lOGO.png")}}" />
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 

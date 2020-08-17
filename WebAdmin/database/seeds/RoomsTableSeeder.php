@@ -14,42 +14,42 @@ class RoomsTableSeeder extends Seeder
     {
         Room::create([
             'nama' => 'Ruang Aula',
-            'lantai' => '1',
-            'kapasitas' => '50',
-            'fasilitas' => 'AC',
-            'foto' => 'ruang/ruang_aula.jpg'
-        ]);
-
-        Room::create([
-            'nama' => 'Ruang Smart Province',
-            'lantai' => '2',
-            'kapasitas' => '50',
-            'fasilitas' => 'Proyektor',
-            'foto' => 'ruang/ruang_smart_office.jpg'
-        ]);
-
-        Room::create([
-            'nama' => 'Ruang Rapat Kadis',
-            'lantai' => '2',
-            'kapasitas' => '50',
-            'fasilitas' => 'Kipas Angin',
-            'foto' => 'ruang/ruang_rapat_kadis.jpg'
+            'lantai' => '4',
+            'kapasitas' => '150',
+            'fasilitas' => 'AC , Wifi, Podium, Proyektor, Microfone, Gong',
+            'foto' => 'rooms/aula.jpg'
         ]);
 
         Room::create([
             'nama' => 'Ruang Komando',
             'lantai' => '1',
-            'kapasitas' => '50',
+            'kapasitas' => '25',
             'fasilitas' => 'Kulkas',
-            'foto' => 'ruang/ruang_komando.jpg'
+            'foto' => 'rooms/komando.jpg'
+        ]);
+
+        Room::create([
+            'nama' => 'Ruang Rapat Kadis',
+            'lantai' => '2',
+            'kapasitas' => '30',
+            'fasilitas' => 'Wifi, Whiteboard, AC, LEDTelevisi, Sound System',
+            'foto' => 'rooms/rapat_kadis.jpg'
+        ]);
+
+        Room::create([
+            'nama' => 'Ruang Smart Province',
+            'lantai' => '4',
+            'kapasitas' => '15',
+            'fasilitas' => 'Proyektor, Speaker, AC, Komputer, Wifi',
+            'foto' => 'rooms/smart_province.jpg'
         ]);
 
         Room::create([
             'nama' => 'Ruang Workshop',
             'lantai' => '1',
-            'kapasitas' => '50',
-            'fasilitas' => 'AC, Podium',
-            'foto' => 'ruang/ruang_workshop.jpg'
+            'kapasitas' => '20',
+            'fasilitas' => 'AC, Proyektor, AC, Komputer',
+            'foto' => 'rooms/workshop.jpg'
         ]);
         
     }

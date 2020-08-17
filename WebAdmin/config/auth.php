@@ -35,6 +35,9 @@ return [
     |
     */
 
+
+    //array guard iki dipanggil ke LoginController
+    //Auth::guard('admin')->attempt(['username' => $request->username
     'guards' => [
         'web' => [
             'driver' => 'session',
@@ -53,7 +56,7 @@ return [
 
         'admin' => [
             'driver' => 'session',
-            'provider' => 'admins',
+            'provider' => 'admins',  //yang diliat providernya
         ],
     ],
 
@@ -82,7 +85,7 @@ return [
 
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Admin::class,
+            'model' => App\Admin::class, //manggil file model ('Admin.php') terus baru ke db
         ],
         
         // 'users' => [

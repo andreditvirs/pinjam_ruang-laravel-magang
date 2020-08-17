@@ -9,8 +9,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>Pinjam Ruang Diskominfo Jatim</title>
-
+  <title>{{ config('app.name', 'Pinjam Ruang Diskominfo Jatim') }}</title>
+  <link rel="icon" type="image/png" href="{{ asset("storage/site/LOGO.png")}}" />
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ asset('lte/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
@@ -29,6 +29,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script> --}}
   <link rel="stylesheet" href="{{ asset('air-datepicker\dist\css\datepicker.css') }}">
+  <link rel="stylesheet" href="{{ asset('timepicker\tpicker.css') }}">
 
   <style>
     .cropcenter img {
@@ -116,6 +117,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset('lte/dist/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('air-datepicker\dist\js\datepicker.js') }}"></script>
 <script src="{{ asset('air-datepicker\dist\js\i18n\datepicker.en.js') }}"></script>
+<script src="{{ asset('timepicker\tpicker.js') }}"></script>
 {{-- <script>
   $(function() {
   $('#datetimepicker7').datetimepicker();
@@ -127,6 +129,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   });
   $('#datetimepicker8').on("change.datetimepicker", function(e) {
     $('#datetimepicker7').datetimepicker('maxDate', e.date);
+
   });
 });
 </script> --}}

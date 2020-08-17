@@ -19,9 +19,10 @@ class CreateBookingsTable extends Migration
             $table->id();
             $table->foreignId('r_id')->constrained('rooms');
             $table->foreignId('u_id')->constrained('users');
+            $table->date('tanggal_pinjam');
+            $table->time('waktu_mulai',0);
+            $table->time('waktu_selesai',0);
             $table->text('keperluan');
-            $table->dateTime('tanggal_mulai');
-            $table->dateTime('tanggal_selesai');
             $table->string('file')->nullable();
             $table->timestamps();
         });

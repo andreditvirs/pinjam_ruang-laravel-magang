@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 Use Redirect;
+Use Storage;
 
 class BookingsController extends Controller
 {
@@ -42,54 +43,52 @@ class BookingsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'r_id'=>'required',
-            'u_id'=>'required',
-            'tanggal_mulai'=>'required',
-            'tanggal_selesai'=>'required',
-            'keperluan' => 'required'
-        ]);
+        $valid = $this->validasi_input($request);
   
-        // $foto=$request->file('foto')->store('bookings','public');
+        if ($valid->fails()) {
+            return Redirect::to('bookings/create')
+            ->withErrors($valid);
+ 
+        }else{
+            $file=$request->file('file')->store('bookings','public');
 
-        $booking = new \App\Booking;
-        $tanggal_mulai = $request->get('tanggal_mulai');
-        $hari_mulai = substr($tanggal_mulai, 0, 2);
-        $bulan_mulai = substr($tanggal_mulai, 3, 2);
-        $tahun_mulai = substr($tanggal_mulai, 6, 4);
-        $jam_mulai = substr($tanggal_mulai, 11, 2);
-        $menit_mulai = substr($tanggal_mulai, 14, 2);
-        $ampm_mulai = substr($tanggal_mulai, 17, 2);
-
-        $tanggal_selesai = $request->get('tanggal_selesai');
-        $hari_selesai = substr($tanggal_selesai, 0, 2);
-        $bulan_selesai = substr($tanggal_selesai, 3, 2);
-        $tahun_selesai = substr($tanggal_selesai, 6, 4);
-        $jam_selesai = substr($tanggal_selesai, 11, 2);
-        $menit_selesai = substr($tanggal_selesai, 14, 2);
-        $ampm_selesai = substr($tanggal_selesai, 17, 2);
-
-        if($ampm_mulai == 'pm'){
-            $jam_mulai = intval($jam_mulai) + 12;
-        }
-
-        if($ampm_selesai == 'pm'){
-            $jam_selesai = intval($jam_mulai) + 12;
-        }
-
-        $tanggal_mula = $tahun_mulai.'-'.$bulan_mulai.'-'.$hari_mulai.' '.$jam_mulai.':'.$menit_mulai.':'.'00';
-        $tanggal_selesa = $tahun_selesai.'-'.$bulan_selesai.'-'.$hari_selesai.' '.$jam_selesai.':'.$menit_selesai.':'.'00';
-
-        $booking->r_id=$request->get('r_id');
-        $booking->u_id=$request->get('u_id');
-        $booking->tanggal_mulai=$tanggal_mula;
-        $booking->tanggal_selesai=$tanggal_selesa;
-        $booking->keperluan=$request->get('keperluan');
-        // $booking->foto=$foto;
-        $booking->save();
-
-        return redirect()->route('bookings.index')
+            $booking = new \App\Booking;
+            $tanggal_pinjam = $request->get('tanggal_pinjam');
+            $hari_pinjam = substr($tanggal_pinjam, 0, 2);
+            $bulan_pinjam = substr($tanggal_pinjam, 3, 2);
+            $tahun_pinjam = substr($tanggal_pinjam, 6, 4);
+    
+            $tanggal_pin = $tahun_pinjam.'-'.$bulan_pinjam.'-'.$hari_pinjam;
+            $waktu_mul = $request->get('waktu_mulai').':00';
+            $waktu_sel = $request->get('waktu_selesai').':00';
+            $booking->r_id=$request->get('r_id');
+            $booking->u_id=$request->get('u_id');
+            $booking->tanggal_pinjam=$tanggal_pin;
+            $booking->waktu_mulai=$waktu_mul;
+            $booking->waktu_selesai=$waktu_sel;
+            $booking->keperluan=$request->get('keperluan');
+            $booking->file=$file;
+            
+            $cek_id_user = DB::table('users')->select('id')->where('users.id', '=', $request->u_id)->first();
+            $cek_id_ruangan = DB::table('rooms')->select('id')->where('rooms.id', '=', $request->r_id)->first();
+            if(is_null($cek_id_ruangan) && is_null($cek_id_user)){
+                return redirect()->route('bookings.create')
+                    ->with('error','Gagal booking. ID ruangan dan ID Peminjam salah.');
+            } 
+            elseif(is_null($cek_id_ruangan)){
+                return redirect()->route('bookings.create')
+                    ->with('error','Gagal booking. ID ruangan salah.');
+            }elseif(is_null($cek_id_user)){
+                return redirect()->route('bookings.create')
+                    ->with('error','Gagal booking. ID Peminjam salah.');
+            }else {
+                $booking->save();
+                return redirect()->route('bookings.index')
                         ->with('success','Booking created successfully.');
+            }
+        }
+        
+        
     }
 
     /**
@@ -123,55 +122,54 @@ class BookingsController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        $rules=[    
-            'nama'=>'required',
-            'lantai'=>'required',
-            'kapasitas'=>'required|integer',
-            'fasilitas'=>'required',
-            'foto'=>'required|mimes:jpg,png,jpeg,JPG'
-        ];
- 
-        $pesan=[
-            'nama.required'=>'Nama tidak boleh kosong!',
-            'lantai.required'=>'Lantai tidak boleh kosong!',
-            'kapasitas.required'=>'Kapasitas tidak boleh kosong!',
-            'fasilitas.required'=>'Fasilitas tidak boleh kosong!',
-            'foto.required'=>'Foto tidak boleh kosong!'
-        ];
- 
-        $validator=Validator::make($request->all(),$rules,$pesan);
- 
-        if ($validator->fails()) {
+        $valid = $this->validasi_input($request);
+        if ($valid->fails()) {
             return Redirect::to('bookings/'.$booking->id.'/edit')
-            ->withErrors($validator);
+            ->withErrors($valid);
  
         }else{
+             $file=$request->file('file')->store('bookings','public');
  
-            $foto="";
- 
-            if (!$request->file('foto')) {
+            if (!$request->file('file')) {
                 # code...
-                $foto=$request->get('foto');
+                $file=$request->get('file');
             }else{
-                if(Storage::disk('public')->has($booking->foto)){
-                    Storage::disk('public')->delete($booking->foto);
+                if(Storage::disk('public')->has($booking->file)){
+                    Storage::disk('public')->delete($booking->file);
                 }
-                $foto=$request->file('foto')->store('bookings','public');                
+                $foto=$request->file('file')->store('bookings','public');                
             }
+            $file=$request->file('file')->store('bookings','public');
+           
 
-            $booking->nama=$request->get('nama');
-            $booking->lantai=$request->get('lantai');
-            $booking->kapasitas=$request->get('kapasitas');
-            $booking->fasilitas=$request->get('fasilitas');
-            $booking->foto=$foto;
+            //$booking = new \App\Booking;
+            $tanggal_pinjam = $request->get('tanggal_pinjam');
+            $hari_pinjam = substr($tanggal_pinjam, 0, 2);
+            $bulan_pinjam = substr($tanggal_pinjam, 3, 2);
+            $tahun_pinjam = substr($tanggal_pinjam, 6, 4);
+    
+            $tanggal_pin = $tahun_pinjam.'-'.$bulan_pinjam.'-'.$hari_pinjam;
+            $waktu_mul = $request->get('waktu_mulai').':00';
+            $waktu_sel = $request->get('waktu_selesai').':00';
+            $booking->r_id=$request->get('r_id');
+            $booking->u_id=$request->get('u_id');
+            $booking->tanggal_pinjam=$tanggal_pin;
+            $booking->waktu_mulai=$waktu_mul;
+            $booking->waktu_selesai=$waktu_sel;
+            $booking->keperluan=$request->get('keperluan');
+            $booking->file=$file;
             $booking->save();
- 
-            // Session::flash('message','Data Barang Berhasil Diubah');
-             
             return redirect()->route('bookings.index')
                         ->with('success','Booking created successfully.');
         }
-    }
+            }
+    
+            
+ 
+            // Session::flash('message','Data Barang Berhasil Diubah');
+             
+            
+    
 
     /**
      * Remove the specified resource from storage.
@@ -193,5 +191,31 @@ class BookingsController extends Controller
 
     public function getBookingCount(){
         return $count = DB::table('bookings')->count();
+    }
+
+    public function validasi_input(Request $request)
+    {
+        $rules=[    
+            'r_id'=>'required|integer',
+            'u_id'=>'required|integer',
+            'tanggal_pinjam' => 'required',
+            'waktu_mulai'=>'required',
+            'waktu_selesai'=>'required',
+            'keperluan'=>'required',
+            'file'=>'required|mimes:jpg,png,jpeg,JPG'
+        ];
+ 
+        $pesan=[
+            'r_id.required'=>'ID Ruangan tidak boleh kosong!',
+            'u_id.required'=>'ID Peminjam tidak boleh kosong!',
+            'tanggal_pinjam'=> 'Tanggal pinjam tidak boleh kosong!',
+            'waktu_mulai.required'=>'Waktu mulai tidak boleh kosong!',
+            'waktu_selesai.required'=>'Waktu selesai tidak boleh kosong!',
+            'keperluan.required'=>'Keperluan tidak boleh kosong!',
+            'file.required'=>'Foto surat izin tidak boleh kosong!'
+        ];
+ 
+        $validator=Validator::make($request->all(),$rules,$pesan);
+        return $validator;
     }
 }
