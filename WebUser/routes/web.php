@@ -45,13 +45,13 @@ Route::group(['middleware' => 'homeauth'], function(){
             });
             
             Route::get('bookings/status', function () {
-                if(Cache::has('booking_r_id')){
-                    Cache::forget('booking_r_id');
-                    Cache::forget('booking_tanggal_pinjam');
-                    Cache::forget('booking_waktu_mulai');
-                    Cache::forget('booking_waktu_selesai');
-                    if(Cache::has('booking_keperluan')){
-                        Cache::forget('booking_keperluan');
+                if(Cache::has('booking_r_id'.Cookie::get('access_token'))){
+                    Cache::forget('booking_r_id'.Cookie::get('access_token'));
+                    Cache::forget('booking_tanggal_pinjam'.Cookie::get('access_token'));
+                    Cache::forget('booking_waktu_mulai'.Cookie::get('access_token'));
+                    Cache::forget('booking_waktu_selesai'.Cookie::get('access_token'));
+                    if(Cache::has('booking_keperluan'.Cookie::get('access_token'))){
+                        Cache::forget('booking_keperluan'.Cookie::get('access_token'));
                     }
                 }
                 return view('akun.usersbooking');
@@ -62,7 +62,7 @@ Route::group(['middleware' => 'homeauth'], function(){
             });
         
             Route::get('bookings/step/2', function () {
-                if(Cache::has('booking_r_id')){
+                if(Cache::has('booking_r_id'.Cookie::get('access_token'))){
                     return view('akun.formbooking2');
                 }else{
                     return redirect()->back();
@@ -70,7 +70,7 @@ Route::group(['middleware' => 'homeauth'], function(){
             });
         
             Route::get('bookings/step/3', function () {
-                if(Cache::has('booking_r_id') && Cache::has('booking_keperluan')){
+                if(Cache::has('booking_r_id'.Cookie::get('access_token')) && Cache::has('booking_keperluan'.Cookie::get('access_token'))){
                     return view('akun.formbooking3');
                 }else{
                     return redirect()->back();

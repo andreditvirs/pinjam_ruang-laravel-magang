@@ -18,12 +18,12 @@ class UserAuthMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $cookie = Cookie::get('access_token');
-        $valid = GuzzleController::validasiUser($cookie);
-        if (is_null($cookie) || !$valid) {
+        $access_token= Cookie::get('access_token');
+        $valid = GuzzleController::validasiUser($access_token);
+        if (is_null($access_token) || !$valid) { //if not valid -> login
             return $next($request);
         }
 
-        return redirect('home');
+        return redirect('home'); //if has token or valid
     }
 }

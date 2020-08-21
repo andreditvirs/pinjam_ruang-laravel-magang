@@ -6,6 +6,12 @@
   <span class="login100-form-title p-b-32">
     Edit Profile
   </span>
+  @if (session('alert'))
+  <div class="alert alert-success m-t-24">
+      {{ session('alert') }}
+  </div>
+  @endif
+
     <span class="txt1 p-b-11">
       NIP
     </span>
@@ -58,14 +64,12 @@
         <div class="mb-3">
             <select class="custom-select" name="edit_departemen">
               <option value="">Pilih salah satu</option>
-              <option value="1">Bidang Informasi Public</option>
-              <option value="2">Bidang Komunikasi Public</option>
-              <option value="3">Bidang Aplikasi Informatika</option>
-              <option value="4">Bidang Infrastruktur TIK</option>
-              <option value="5">Bidang Pengolahan Data dan Statistik</option>
-              <option value="6">Sekretariat</option>
-              <option value="7">UPTD</option>
-              <option value="8">Jafung</option>
+              <option value="1">Sekretariat</option>
+              <option value="2">Bidang Informasi Publik</option>
+              <option value="3">Bidang Komunikasi Publik</option>
+              <option value="4">Bidang Aplikasi Informatika</option>
+              <option value="5">Bidang Infrastruktur TIK</option>
+              <option value="6">Bidang Pengolahan Data dan Statistik</option>
             </select>
             <div class="invalid-feedback">Harus diisi!</div>
           </div>
@@ -78,9 +82,10 @@
         <div class="mb-3">
             <select class="custom-select" name="edit_jabatan">
               <option value="">Pilih salah satu</option>
-              <option value="1">Ketua Bidang</option>
-              <option value="2">Wakil Ketua Bidang</option>
+              <option value="1">Kepala Bidang</option>
+              <option value="2">Kasubagian</option>
               <option value="3">Sekertaris</option>
+              <option value="4">Anggota</option>
             </select>
             <div class="invalid-feedback">Harus diisi!</div>
           </div>

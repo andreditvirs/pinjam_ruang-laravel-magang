@@ -46,14 +46,12 @@
     <div class="input-group m-b-36">
       <select class="wrap-input100 custom-select" data-validate="Bidang harus diisi" id="inputBidang" name="bidang" required>
         <option value="">-- Pilih salah satu --</option>
-        <option value="1">Bidang Informasi Public</option>
-        <option value="2">Bidang Komunikasi Public</option>
-        <option value="3">Bidang Aplikasi Informatika</option>
-        <option value="4">Bidang Infrastruktur TIK</option>
-        <option value="5">Bidang Pengolahan Data dan Statistik</option>
-        <option value="6">Sekretariat</option>
-        <option value="7">UPTD</option>
-        <option value="8">Jafung</option>
+        <option value="1">Sekretariat</option>
+        <option value="2">Bidang Informasi Publik</option>
+        <option value="3">Bidang Komunikasi Publik</option>
+        <option value="4">Bidang Aplikasi Informatika</option>
+        <option value="5">Bidang Infrastruktur TIK</option>
+        <option value="6">Bidang Pengolahan Data dan Statistik</option>
       </select>
     </div>
 
@@ -64,8 +62,8 @@
       <select class="wrap-input100 custom-select" data-validate="Jabatan harus diisi" id="inputJabatan" name="jabatan" required>
         <option value="">-- Pilih salah satu --</option>
         <option value="1">Kepala Bidang</option>
-        <option value="2">Sekertaris</option>
-        <option value="3">Kasubagian</option>
+        <option value="2">Kasubagian</option>
+        <option value="3">Sekertaris</option>
         <option value="4">Anggota</option>
       </select>
     </div>

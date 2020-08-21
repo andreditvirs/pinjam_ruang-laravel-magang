@@ -10,7 +10,7 @@
     Password Lama
   </span>
   <div class="wrap-input100 validate-input m-b-36">
-    <input class="input100" type="text" name="old_password">
+    <input class="input100" type="password" name="old_password">
     <span class="focus-input100"></span>
   </div>
 
@@ -18,7 +18,7 @@
     Password Baru
   </span>
   <div class="wrap-input100 validate-input m-b-36">
-    <input class="input100" type="text" name="new_password" id="new_password">
+    <input class="input100" type="password" name="new_password" id="new_password">
     <span class="focus-input100"></span>
   </div>
 
@@ -26,7 +26,7 @@
     Konfirmasi Password Baru
   </span>
   <div class="wrap-input100 validate-input m-b-36">
-    <input class="input100" type="text" name="confirm_password" id="confirm_password">
+    <input class="input100" type="password" name="confirm_password" id="confirm_password">
     <span class="focus-input100"></span>
   </div>
     <a href="{{ URL::to('profile/edit') }}"><button type="button" class="btn btn-outline-info btn-lg">Kembali</button></a>

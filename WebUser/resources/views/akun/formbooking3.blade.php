@@ -8,7 +8,7 @@
         </span>
         <div class="container p-b-32">
             <div class="row bs-wizard" style="border-bottom:0;">
-                @if (Cache::has('booking_r_id'))
+                @if (Cache::has('booking_r_id'.Cookie::get('access_token')))
                 <div class="col-md-4 bs-wizard-step complete">    
                 @else
                 <div class="col-md-4 bs-wizard-step active">    
@@ -18,7 +18,7 @@
                   <a href="{{ URL::to('bookings/step/1')}}" class="bs-wizard-dot"></a>
                   <div class="bs-wizard-info text-center ml-3 mr-3">Masukkan Ruangan dan Tanggal Peminjaman</div>
                 </div>
-                @if (Cache::has('booking_r_id'))
+                @if (Cache::has('booking_r_id'.Cookie::get('access_token')))
                 <div class="col-md-4 bs-wizard-step complete">    
                 @else
                 <div class="col-md-4 bs-wizard-step disabled">    
@@ -29,7 +29,7 @@
                     <div class="bs-wizard-info text-center ml-3 mr-3">Masukkan Keperluan Peminjaman</div>
                   </div>
 
-                @if (Cache::has('booking_r_id') && Cache::has('booking_keperluan'))
+                @if (Cache::has('booking_r_id'.Cookie::get('access_token')) && Cache::has('booking_keperluan'.Cookie::get('access_token')))
                 <div class="col-md-4 bs-wizard-step active">    
                 @else
                 <div class="col-md-4 bs-wizard-step disabled">    

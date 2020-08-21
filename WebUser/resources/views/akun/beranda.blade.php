@@ -24,7 +24,7 @@
                             <div class="d-flex h-100">
                                 <div class="w-100 my-auto text-center justify-content-center">
                                     <h4 class="pl-5 pr-5 text-white mx-auto text-lg-left">{{ Cookie::get('nama') }}</h4>
-                                    <h4 class="pl-5 pr-5 text-white text-lg-left">{{ Cookie::get('nip') }}</h4>
+                                    <h5 class="pl-5 pr-5 text-white text-lg-left">{{ Cookie::get('nip') }}</h5>
                                     <p class="pl-5 pr-5 mb-0 text-white-50 text-lg-left">{{ Cookie::get('jabatan') }}</p>
                                     <p class="pl-5 pr-5 mb-0 text-white-50 text-lg-left">{{ Cookie::get('bidang') }}</p>
                                     <hr class="d-none d-lg-block mb-5 ml-0" />
@@ -39,7 +39,7 @@
             </div>
         </header>
 
-        <section class="projects-section bg-light pt-5 pb-5" id="projects">
+        <section class="projects-section bg-light pt-5 pb-5" id="">
             <div class="container">
                 <!-- Featured Project Row-->
                 <div class="row align-items-center no-gutters mb-4 mb-lg-5">
@@ -56,7 +56,7 @@
         
         <section class="Jadwal-section bg-light" id="Jadwal">
             <br><br><label for="" style="align-items: center; font-size: 32px"> Jadwal Peminjaman</label>
-            <br><label style="align-items: center; font-size: 18px" class="text-primary"> Filter Peminjaman</label><br><br>
+            <br><label style="align-items: center; font-size: 18px" class="text-primary">Pencarian Peminjaman</label><br><br>
             <div class="container p-b-11">
                 <form method="POST" action="{{ route('filter_bookings')}}">
                     @csrf
@@ -118,59 +118,77 @@
  
             <div class="container mt-2">
                 <br><br>
-                <div class="row justify-content-center">
-                    @if(count(Cache::get('bookings')['bookings']) != 0)
-                    <?php $i=0 ?>
-                    @foreach (Cache::get('bookings')['bookings'] as $booking)
-                    <div class="col-sm-4 mt-4">
-                        <div class="card">
-                          <div class="card-body">
-                          <h5 class="card-title mb-4">{{ $booking["r_nama"]}}</h5>
-                          <p class="card-subtitle">Dipinjam oleh</p>
-                          <h6 class="card-text text-secondary mb-4">{{ $booking["u_nama"] }}</h6>
-                          <p class="card-subtitle">Tanggal Pinjam</p>
-                          <h6 class="card-text text-info">{{ $booking["tanggal_pinjam"] }}</h6>
-                          <p class="card-subtitle">Waktu</p>
-                          <h6 class="card-text text-info mb-5">{{ $booking["waktu_mulai"] }} s/d {{ $booking["waktu_selesai"] }}</h6>
-                          <a href="" class="btn btn-outline-info" data-toggle="modal" data-target=".bd-example-modal-lg-bukti{{$i+=1}} ">Lihat Surat Izin</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="modal fade bd-example-modal-lg-bukti{{$i}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h1 class="text-center pt-3 pb-1">Bukti Peminjaman</h1>
-                                        <hr>
-                                        <div class="row justify-content-center">
-                                            <div class="col-lg-10 h-100 pb-5 pr-5 pl-5 cropfotoprofil">
-                                                <img src="{{ Cookie::get('address_web_server').$booking["file"]}}" alt="Image">
-                                            </div>
-                                        </div>
-                                        <div class="row justify-content-center pb-5">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                                        </div>
+                {{-- <div class="row justify-content-center"> --}}
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Foto</th>
+                            <th scope="col">Nama Ruangan</th>
+                            <th scope="col">Tanggal dan Waktu</th>
+                            <th scope="col">Bidang</th>
+                            <th scope="col">Nama Peminjam</th>
+                            <th scope="col">Bukti Peminjaman</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            @if(count(Cache::get('bookings'.Cookie::get('access_token'))['bookings']) != 0)
+                            <?php $i=0 ?>
+                            @foreach (Cache::get('bookings'.Cookie::get('access_token'))['bookings'] as $booking)         
+                                <th scope="row"> <div class="cropfotoprofil"> <img style="max-height: 60px; max-width: 200px;" class="rounded" src="{{ Cookie::get('address_web_server').$booking['r_foto'] }}" alt=""> </div></th>
+                                <td>{{ $booking["r_nama"]}}</td>
+                                <td>{{ $booking["tanggal_pinjam"] }} <br> {{ substr($booking["waktu_mulai"],0,5) }} s/d {{ substr($booking["waktu_selesai"],0,5) }}</td>
+                                <td>{{ $booking["d_nama"]}}</td> 
+                                <td>{{ $booking["u_nama"] }}</td>
+                                <td><a href="" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg-bukti{{$i+=1}} ">
+                                    <svg width="2em" height="2em" viewBox="0 0 16 13" class="bi bi-file-earmark-text-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M2 3a2 2 0 0 1 2-2h5.293a1 1 0 0 1 .707.293L13.707 5a1 1 0 0 1 .293.707V13a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3zm7 2V2l4 4h-3a1 1 0 0 1-1-1zM4.5 8a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
+                                    </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                              
+                        {{-- </div> --}}
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td align="center" colspan="8"><p class="text-info">Tidak ada peminjaman ruang</p></td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <?php $i=0 ?>
+            @foreach (Cache::get('bookings'.Cookie::get('access_token'))['bookings'] as $booking)
+            <div class="modal fade bd-example-modal-lg-bukti{{$i+=1}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1 class="text-center pt-3 pb-1">Bukti Peminjaman</h1>
+                                <hr>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-10 h-100 pb-5 pr-5 pl-5 cropfotoprofil">
+                                        <img src="{{ Cookie::get('address_web_server').$booking["file"]}}" alt="Image">
                                     </div>
+                                </div>
+                                <div class="row justify-content-center pb-5">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @endforeach
-                    @else
-                    <tr>
-                        <td align="center" colspan="8"><p class="text-info">Tidak ada peminjaman ruang</p></td>
-                    </tr>
-                    @endif
                 </div>
             </div>
-            <br>
+            @endforeach
         </section>
 
         <!-- Projects-->
         <section class="projects-section bg-light pt-5 pb-5" id="projects">
             <div class="container">
-                <!-- Project One Row-->
+                <!-- Project First Row-->
                 <div class="row justify-content-center no-gutters cropcenter mb-5 mb-lg-0" >
                     <div class="col-lg-6"><img class="img-fluid " style="max-height: 400px; min-height: 100px;" src="{{ Cookie::get('address_web_server').Cache::get('1_foto') }}" alt="" /></div>
                     <div class="col-lg-6">
@@ -213,7 +231,7 @@
                     </div>
                 </div>
 
-                <!-- Project Two Row-->
+                <!-- Project Second Row-->
                 <div class="row justify-content-center no-gutters cropcenter ">
                     <div class="col-lg-6"><img class="img-fluid" style="max-height: 400px; min-height: 100px;" src="{{ Cookie::get('address_web_server').Cache::get('2_foto') }}" alt="" /></div>
                     <div class="col-lg-6 order-lg-first">
@@ -342,7 +360,7 @@
                     </div>
                 </div>
 
-                <!-- Project Fiveth Row-->
+                <!-- Project Fifth Row-->
                 <div class="row justify-content-center no-gutters cropcenter mb-5 mb-lg-0" >
                     <div class="col-lg-6"><img class="img-fluid " style="max-height: 400px; min-height: 100px;" src="{{ Cookie::get('address_web_server').Cache::get('5_foto') }}" alt="" /></div>
                     <div class="col-lg-6">

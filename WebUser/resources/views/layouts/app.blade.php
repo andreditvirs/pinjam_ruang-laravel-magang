@@ -14,19 +14,13 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{ asset('css/styles.css')}}" rel="stylesheet"/>
-        <link rel="stylesheet" href="{{ asset('custom/css/bootstrap-custom.min.css') }}">
         <link rel="stylesheet" href="{{ asset('air-datepicker\dist\css\datepicker.css') }}">
         <link rel="stylesheet" href="{{ asset('timepicker\tpicker.css') }}">
         @include('inc.style')
     </head>
 
-    <body id="page-top">
-
-        {{-- @include('inc.navbar') --}}
-
+    <body id="page-top" class="w-100">
             @yield('content')
-
-        {{-- @include('akun.index') --}}
         <!-- Footer-->
         <footer class="footer bg-darkblue small text-center text-white-50"><div class="container">Copyright © DISKOMINFO JAWA TIMUR 2020</div></footer>
         <!-- Bootstrap core JS-->

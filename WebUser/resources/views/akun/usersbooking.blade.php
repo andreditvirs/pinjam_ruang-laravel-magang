@@ -23,9 +23,9 @@
     
     <div class="row">
         <div class="col">
-            @if(count(Cache::get('user_booking')['user_booking']) != 0)
+            @if(count(Cache::get('user_booking'.Cookie::get('access_token'))['user_booking']) != 0)
             <?php $i=0 ?>
-            @foreach (Cache::get('user_booking')['user_booking'] as $booking)
+            @foreach (Cache::get('user_booking'.Cookie::get('access_token'))['user_booking'] as $booking)
             <div class="card border-info mb-3">
                 <div class="card-body">
                     
@@ -62,6 +62,9 @@
             <form id="delete_user_booking" action="{{ route('delete_user_booking') }}" method="POST" style="display: none;">
                 @csrf
                 <input type="hidden" name="r_id" value="{{ $booking['r_id'] }}">
+                <input type="hidden" name="tanggal_pinjam" value="{{ $booking['tanggal_pinjam'] }}">
+                <input type="hidden" name="waktu_mulai" value="{{ $booking['waktu_mulai'] }}">
+                <input type="hidden" name="waktu_selesai" value="{{ $booking['waktu_selesai'] }}">
             </form>
             @endforeach
             @else

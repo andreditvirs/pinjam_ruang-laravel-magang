@@ -18,10 +18,10 @@ class HomeAuthMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $cookie = Cookie::get('access_token');
-        $valid = GuzzleController::validasiUser($cookie);
-        if (!is_null($cookie) || $valid) {
-            return $next($request);
+        $access_token = Cookie::get('access_token');
+        $valid = GuzzleController::validasiUser($access_token); //beranda
+        if (!is_null($access_token) && $valid) {
+            return $next($request); //if has token & valid, next request to home page.
         }
         return redirect('login');
     }
