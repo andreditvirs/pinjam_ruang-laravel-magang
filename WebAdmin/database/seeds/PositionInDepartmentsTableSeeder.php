@@ -13,11 +13,7 @@ class PositionInDepartmentsTableSeeder extends Seeder
     public function run()
     {
         PositionInDepartment::create([
-            'nama' => 'Kepala Dinas'
-        ]);
-
-        PositionInDepartment::create([
-            'nama' => 'Sekertaris'
+            'nama' => 'Kepala Bidang'
         ]);
 
         PositionInDepartment::create([
@@ -25,15 +21,11 @@ class PositionInDepartmentsTableSeeder extends Seeder
         ]);
 
         PositionInDepartment::create([
-            'nama' => 'Kepala'
+            'nama' => 'Sekertaris'
         ]);
 
         PositionInDepartment::create([
             'nama' => 'Anggota'
-        ]);
-
-        PositionInDepartment::create([
-            'nama' => 'Unstruktural'
         ]);
     }
 }

@@ -118,13 +118,13 @@ class PositionInDepartmentsController extends Controller
      * @param  \App\PositionInDepartment  $position_in_department
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PositionInDepartment $position_in_department)
-    {
-        $position_in_department->delete();
+    // public function destroy(PositionInDepartment $position_in_department)
+    // {
+    //     $position_in_department->delete();
   
-        return redirect()->route('position_in_departments.index')
-                        ->with('success','PositionInDepartment deleted successfully');
-    }
+    //     return redirect()->route('position_in_departments.index')
+    //                     ->with('success','PositionInDepartment deleted successfully');
+    // }
 
     public function getPositionInDepartmentCount(){
         return $count = DB::table('position_in_departments')->count();

@@ -19,7 +19,7 @@ class DepartmentsController extends Controller
     {
         $departments = DB::table('departments')
                 ->leftJoin('users', 'departments.kepala_id', '=', 'users.id')
-                ->select('departments.*', 'users.nama as user_nama')
+                ->select('departments.*', 'users.nama as user_nama')//* untuk memilih tabel department
                 ->get();
 
         return view('departments.index', compact('departments'));
@@ -68,7 +68,7 @@ class DepartmentsController extends Controller
      */
     public function show(Department $department)
     {
-        return view('departments.show', compact('department'));
+        return view('departments.show', compact('department')); // Fungsi compact () membuat array dari variabel dan nilainya.
     }
 
     /**
@@ -127,13 +127,13 @@ class DepartmentsController extends Controller
      * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Department $department)
-    {
-        $department->delete();
+    // public function destroy(Department $department)
+    // {
+    //     $department->delete();
   
-        return redirect()->route('departments.index')
-                        ->with('success','Department deleted successfully');
-    }
+    //     return redirect()->route('departments.index')
+    //                     ->with('success','Department deleted successfully');
+    // }
 
     public function getDepartmentCount(){
         return $count = DB::table('departments')->count();

@@ -153,17 +153,17 @@ class RoomsController extends Controller
      * @param  \App\Room  $room
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Room $room)
-    {
-        if(Storage::disk('public')->has($room->foto)){
-            Storage::disk('public')->delete($room->foto);
-        }
+    // public function destroy(Room $room)
+    // {
+    //     if(Storage::disk('public')->has($room->foto)){
+    //         Storage::disk('public')->delete($room->foto);
+    //     }
 
-        $room->delete();
+    //     $room->delete();
   
-        return redirect()->route('rooms.index')
-                        ->with('success','Room deleted successfully');
-    }
+    //     return redirect()->route('rooms.index')
+    //                     ->with('success','Room deleted successfully');
+    // }
 
     public function getRoomCount(){
         return $count = DB::table('rooms')->count();

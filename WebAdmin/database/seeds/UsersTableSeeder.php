@@ -76,7 +76,7 @@ class UsersTableSeeder extends Seeder
             'jenis_kelamin' => 'L',
             'jabatan_id' => 1,
             'foto' => 'image.jpg',
-            'department_id' => 6
+            'department_id' => 1
         ]);
 
         User::create([
@@ -87,7 +87,7 @@ class UsersTableSeeder extends Seeder
             'jenis_kelamin' => 'L',
             'jabatan_id' => 1,
             'foto' => 'image.jpg',
-            'department_id' => 7
+            'department_id' => 2
         ]);
         
         User::create([
@@ -98,7 +98,7 @@ class UsersTableSeeder extends Seeder
             'jenis_kelamin' => 'L',
             'jabatan_id' => 1,
             'foto' => 'image.jpg',
-            'department_id' => 8
+            'department_id' => 3
         ]);
 
         User::create([
@@ -109,7 +109,7 @@ class UsersTableSeeder extends Seeder
             'jenis_kelamin' => 'P',
             'jabatan_id' => 1,
             'foto' => 'image.jpg',
-            'department_id' => 9
+            'department_id' => 4
         ]);
 
         User::create([
@@ -120,7 +120,7 @@ class UsersTableSeeder extends Seeder
             'jenis_kelamin' => 'L',
             'jabatan_id' => 1,
             'foto' => 'image.jpg',
-            'department_id' => 1
+            'department_id' => 5
         ]);
     }
 }

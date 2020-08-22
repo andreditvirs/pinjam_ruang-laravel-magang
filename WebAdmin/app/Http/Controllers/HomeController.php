@@ -11,7 +11,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct() // __ underline constract ini digunakan sebagai menandai jika dia kelas. 
     {
         $this->middleware('auth');
     }

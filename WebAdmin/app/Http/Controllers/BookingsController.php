@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 Use Redirect;
 Use Storage;
+use Illuminate\Support\Carbon;
 
 class BookingsController extends Controller
 {
@@ -18,7 +19,7 @@ class BookingsController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::all();
+        $bookings = DB::table('bookings')->orderBy('id', 'desc')->paginate(10);
   
         return view('bookings.index', compact('bookings'));
         // return view('bookings.index',compact('bookings'))
@@ -163,13 +164,6 @@ class BookingsController extends Controller
                         ->with('success','Booking created successfully.');
         }
             }
-    
-            
- 
-            // Session::flash('message','Data Barang Berhasil Diubah');
-             
-            
-    
 
     /**
      * Remove the specified resource from storage.
